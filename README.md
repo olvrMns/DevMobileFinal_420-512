@@ -1,5 +1,7 @@
 # BACKEND
 
+- source []
+
 ## .ENV
 
 - .dev.env / .test.env
@@ -11,6 +13,18 @@
     - DB_PORT
     - DB_HOST
     - DM_NAME
-    
-    ## npm install
-    - ... 
+
+## npm install
+    - express
+    - dotenv
+    - mysql2
+    - winston
+    - bcrypt
+    - cors
+    - jsonwebtoken
+    - http-status-codes
+### --save-dev
+    - cross-env
+
+## REF
+- ...
