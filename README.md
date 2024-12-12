@@ -15,6 +15,7 @@
     - DB_PORT
     - DB_HOST
     - DM_NAME
+    - API_KEY
 
 ## npm install
     - express
