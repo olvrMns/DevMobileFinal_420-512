@@ -10,6 +10,7 @@
     - SERVER_PORT
     - EXPIRES_IN
     - REFRESH_EXPIRES_IN
+    - PRIVATE_KEY
     - DB_USER
     - DB_PWD
     - DB_PORT
