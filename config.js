@@ -1,0 +1,1 @@
+export default IP_BACKEND = "http://172.23.48.1:8080"
