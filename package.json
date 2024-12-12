@@ -1,4 +1,9 @@
 {
+  "type": "module",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=dev nodemon src/app.js",
+    "test": "cross-env NODE_ENV=test ..."
+  },
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
@@ -10,6 +15,13 @@
     "winston": "^3.17.0"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "nodemon": "^3.1.7"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "./LOGS/"
+    ],
+    "delay": "2"
   }
 }

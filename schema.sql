@@ -17,3 +17,5 @@ CREATE TABLE IF NOT EXISTS user(
     pwd VARCHAR(100) NOT NULL,
     PRIMARY KEY (user_id)
 );
+
+insert into user(username, email, pwd) values("slt", "slt", "slt");

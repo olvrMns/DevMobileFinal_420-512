@@ -82,6 +82,7 @@ web_modules/
 .test.env
 .db.env
 .serv.env
+.dev.env
 
 LOGS
 
