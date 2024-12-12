@@ -2,6 +2,7 @@ import Dotenv from 'dotenv';
 import path from 'path';
 Dotenv.config({path: `${path.resolve()}/.${process.env.NODE_ENV}.env`});
 import Express from 'express';
+//export {LOGGER} from './logger.js';
 import {} from './db.js';
 
 const app = Express();
