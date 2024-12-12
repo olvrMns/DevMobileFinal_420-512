@@ -1,6 +1,8 @@
 # BACKEND
 
-- source []
+- [rawg](https://api.rawg.io/docs/)
+- [giantbomb](https://www.giantbomb.com/api/documentation/)
+- [igdb](https://api-docs.igdb.com/#getting-started)
 
 ## .ENV
 
