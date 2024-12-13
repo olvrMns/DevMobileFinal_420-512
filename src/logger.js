@@ -1,5 +1,5 @@
-import { createLogger, Logger, format, config, transports, Logform } from "winston";
-//import { SyslogConfigSetLevels } from "winston/lib/winston/config";
+import Winston, { createLogger, format, transports} from "winston";
+//import { SyslogConfigSetLevels } from "winston/lib/winston/config"; //Logform, config, ogger
 
 
 const LOG_DIRECTORY_PATH = "./LOGS/";
