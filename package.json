@@ -1,7 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "dev": "cross-env NODE_ENV=dev nodemon src/app.js",
+    "dev": "cross-env NODE_ENV=dev nodemon src/server.js",
     "test": "cross-env NODE_ENV=test ..."
   },
   "dependencies": {
@@ -22,6 +22,6 @@
     "ignore": [
       "./LOGS/"
     ],
-    "delay": "2"
+    "delay": "3000"
   }
 }

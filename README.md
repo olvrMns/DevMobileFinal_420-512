@@ -15,7 +15,7 @@
     - DB_PWD
     - DB_PORT
     - DB_HOST
-    - DM_NAME
+    - DB_NAME
     - API_KEY
 
 ## npm install
