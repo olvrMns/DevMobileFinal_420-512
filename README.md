@@ -19,17 +19,26 @@
     - API_KEY
 
 ## npm install
-    - express
-    - dotenv
-    - mysql2
-    - winston
-    - bcrypt
-    - cors
-    - jsonwebtoken
-    - http-status-codes
-### --save-dev
+- express
+- dotenv
+- mysql2
+- winston
+- bcrypt
+- cors
+- jsonwebtoken
+- http-status-codes
+    ### --save-dev
     - cross-env
     - nodemon
 
 ## REF
 - [fix __dir](https://stackoverflow.com/questions/64383909/dirname-is-not-defined-error-in-node-js-14-version)
+- [env?](https://stackoverflow.com/questions/77498008/nodemon-not-loading-env-variables-in-node-js-20-9-0-undefined)
+
+##
+
+```
+import { config } from 'dotenv';
+import path from 'path';
+config({path: `${path.resolve()}/.${process.env.NODE_ENV}.env`});
+```

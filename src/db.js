@@ -26,12 +26,12 @@ class DBQuerier {
         }
     }
 
-    async execute(asyncQueryCallback) {
+    async execute(query, params) {
         try {
             await this.openConnection();
-            queryResult = await asyncQueryCallback();
+            let [results] = await this.connection.execute(query, params);
             await this.closeConnection();
-            return queryResult;
+            return results[0];
         } catch(err) {
             LOGGER.log("error", err.message);
             return null;
@@ -44,17 +44,10 @@ class DBQuerier {
 
 export const QUERIER = new DBQuerier();
 
-// const connection = createConnection({
-//     user: process.env.DB_USER,
-//     password: process.env.DB_PWD,
-//     port: process.env.DB_PORT,
-//     host: process.env.DB_HOST,
-//     database: process.env.DB_NAME
-// }).promise();
-
-export const getUsers = async () => {
-    const users = await connection.query("select * from user;");
-    return users[0];
+export const getUser = async (username, email, pwd) => {
+    const users2 = await QUERIER.execute("SELECT * FROM user WHERE username = ? AND pwd = ?;", ["test", "test"]);
+    //const users = await connection.query("select * from user;");
+    return users2?.username;
 }
 
-
+console.log("value: " + (await getUser("test", "test@gmail.com", "test")));
