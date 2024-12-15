@@ -1,6 +1,6 @@
-import Dotenv, { config } from 'dotenv';
-import path from 'path';
-config({path: `${path.resolve()}/.${process.env.NODE_ENV}.env`});
+// import { config } from 'dotenv';
+// import path from 'path';
+// config({path: `${path.resolve()}/.${process.env.NODE_ENV}.env`});
 import { LOGGER } from './logger.js';
 import { app } from './app.js';
 

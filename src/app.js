@@ -1,5 +1,5 @@
 import Express from 'express';
-import {getUsers} from './db.js';
+import { getUsers } from './db.js';
 import { StatusCodes } from 'http-status-codes';
 
 export const app = Express();

@@ -1,8 +1,8 @@
 {
   "type": "module",
   "scripts": {
-    "dev": "cross-env NODE_ENV=dev nodemon src/server.js",
-    "test": "cross-env NODE_ENV=test ..."
+    "dev": "nodemon --exec node --env-file=.dev.env src/server.js",
+    "test": "cross-env NODE_ENV=test jest"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
@@ -17,11 +17,5 @@
   "devDependencies": {
     "cross-env": "^7.0.3",
     "nodemon": "^3.1.7"
-  },
-  "nodemonConfig": {
-    "ignore": [
-      "./LOGS/"
-    ],
-    "delay": "3000"
   }
 }
