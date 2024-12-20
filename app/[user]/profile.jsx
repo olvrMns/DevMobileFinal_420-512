@@ -58,7 +58,7 @@ const profile = () =>{
       const userData = {
         username,
         email,
-        id: glob.user
+        user_id: glob.user
       }
       try{
         isSaved = await updateProfileData(userData)
