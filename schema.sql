@@ -2,12 +2,12 @@ DROP DATABASE IF EXISTS GAME_PICKER_DEV;
 CREATE DATABASE IF NOT EXISTS GAME_PICKER_DEV;
 USE GAME_PICKER_DEV;
 
-DROP TABLE IF EXISTS game;
-CREATE TABLE IF NOT EXISTS game(
-    game_id INT AUTO_INCREMENT,
-    name VARCHAR(50) NOT NULL,
-    PRIMARY KEY(game_id)
-);
+-- DROP TABLE IF EXISTS game;
+-- CREATE TABLE IF NOT EXISTS game(
+--     game_id INT AUTO_INCREMENT,
+--     name VARCHAR(50) NOT NULL,
+--     PRIMARY KEY(game_id)
+-- );
 
 DROP TABLE IF EXISTS user;
 CREATE TABLE IF NOT EXISTS user(
@@ -17,6 +17,14 @@ CREATE TABLE IF NOT EXISTS user(
     pwd VARCHAR(100) NOT NULL,
     added_date DATETIME DEFAULT (CURRENT_DATE()),
     PRIMARY KEY (user_id)
+);
+
+DROP TABLE IF EXISTS rel_favorite;
+CREATE TABLE IF NOT EXISTS rel_favorite(
+    rel_id INT AUTO_INCREMENT,
+    id_user INT NOT NULL,
+    id_game INT NOT NULL,
+    PRIMARY KEY (rel_id)
 );
 
 DROP TABLE IF EXISTS rel_friend;
@@ -35,6 +43,11 @@ CREATE TABLE IF NOT EXISTS release_notification(
     id_game INT NOT NULL,
     PRIMARY KEY (notification_id)
 );
+
+ALTER TABLE rel_favorite ADD FOREIGN KEY (id_user) REFERENCES user(user_id);
+ALTER TABLE release_notification ADD FOREIGN KEY (id_user) REFERENCES user(user_id);
+-- ALTER TABLE rel_friend ADD FOREING KEY () REFERENCES ();
+-- ALTER TABLE rel_friend ADD FOREING KEY () REFERENCES ();
 
 insert into user(username, email, pwd) values("test", "test@gmail.com", "test");
 insert into user(username, email, pwd) values("test2", "test2@gmail.com", "test");

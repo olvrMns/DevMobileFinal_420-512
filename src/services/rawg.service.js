@@ -1,32 +1,41 @@
-import { LOGGER } from '../logger.js';
+import { LOGGER } from '../utils/logger.js';
 
 /**
  * @note
- * `https://api.rawg.io/api/games?key=${process.env.RAWG_API_KEY}&developers=fromsoftware`
- * `https://api.rawg.io/api/developers?key=${process.env.RAWG_API_KEY}`
  * 
  */
-class RawgService {
+class RawgURLBuilder {
 
-    constructor() {}
+}
 
-    async fetch_(url) {
+/**
+ * @note
+ * 
+ */
+export class RawgService {
+
+    static page_size = 10;
+
+    static async fetch_(url) {
         try {
-            return await fetch(url);
+            const res = await fetch(url);
+            return (await res.json()).results;
         } catch (ex) {
-            LOGGER.error(ex.message)
+            LOGGER.log("error", ex.message)
             return null;
         }
     }
 
-    async getGames() {
-
+    static async getAllGames(page) {
+        return await this.fetch_(`https://api.rawg.io/api/games?key=${process.env.RAWG_API_KEY}&page_size=${this.page_size}&page=${page ? page : 1}`);
     }
 
-    async getGamesByDevelopers(developers) {
+    // static async getAllGamesByDevelopers(page = 1, developers) {
+    //     return await this.fetch_(`https://api.rawg.io/api/games?key=${process.env.RAWG_API_KEY}&page_size=${this.page_size}&page=1&developers=${developers}`);
+    // }
 
-    }
+    // static async getAllGamesByGenres(page = 1, genres) {
+    //     return await this.fetch_(`https://api.rawg.io/api/games?key=${process.env.RAWG_API_KEY}&page_size=${this.page_size}&page=1&genres=${genres}`);
+    // }
 
 }
-
-export const rawgService = new RawgService();

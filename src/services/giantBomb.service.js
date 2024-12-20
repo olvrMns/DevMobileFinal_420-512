@@ -2,10 +2,7 @@
 
 
 // ...
-class GiantBombService {
-
-    constructor() {}
+export class GiantBombService {
 
 }
 
-export const giantBombService = new GiantBombService();

@@ -47,7 +47,6 @@ class DBQuerier {
     /**
      * 
      * @note
-     * returns nothing (for inserts)
      */
     async query(query) {
         try {
