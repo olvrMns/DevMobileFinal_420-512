@@ -16,7 +16,8 @@
     - DB_PORT
     - DB_HOST
     - DB_NAME
-    - API_KEY
+    - RAWG_API_KEY
+    - GB_API_KEY
 
 ## npm install
 - express
@@ -41,4 +42,8 @@
 import { config } from 'dotenv';
 import path from 'path';
 config({path: `${path.resolve()}/.${process.env.NODE_ENV}.env`});
+```
+
+```
+--exec node --env-file=.dev.env
 ```

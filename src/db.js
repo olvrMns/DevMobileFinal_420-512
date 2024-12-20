@@ -1,6 +1,5 @@
-import { createConnection } from 'mysql2';
 import { createConnection as createConnectionAsync } from 'mysql2/promise';
-import { LOGGER } from './logger.js';
+import { LOGGER } from './utils/logger.js';
 
 class DBQuerier {
 
@@ -21,20 +20,42 @@ class DBQuerier {
 
     async closeConnection() {
         if (this.connection != null) {
-            this.connection.close();
+            this.connection?.close();
             this.connection = null;
         }
     }
 
+    /**
+     * 
+     * @note
+     * returns rows
+     */
     async execute(query, params) {
         try {
             await this.openConnection();
             let [results] = await this.connection.execute(query, params);
             await this.closeConnection();
-            return results[0];
+            return results;
         } catch(err) {
             LOGGER.log("error", err.message);
             return null;
+        } finally {
+            await this.closeConnection();
+        }
+    }
+
+    /**
+     * 
+     * @note
+     * returns nothing (for inserts)
+     */
+    async query(query) {
+        try {
+            await this.openConnection();
+            await this.connection.query(query);
+            await this.closeConnection();
+        } catch(err) {
+            LOGGER.log("error", err.message);
         } finally {
             await this.closeConnection();
         }
@@ -44,10 +65,10 @@ class DBQuerier {
 
 export const QUERIER = new DBQuerier();
 
-export const getUser = async (username, email, pwd) => {
-    const users2 = await QUERIER.execute("SELECT * FROM user WHERE username = ? AND pwd = ?;", ["test", "test"]);
-    //const users = await connection.query("select * from user;");
-    return users2?.username;
+export const getUserByUsernameAndPassword = async (username, pwd) => {
+    const users2 = await QUERIER.execute("SELECT * FROM user WHERE username = ? AND pwd = ?;", [username, pwd]);
+    return users2[0];
 }
 
-console.log("value: " + (await getUser("test", "test@gmail.com", "test")));
+//console.log("value: " + (await getUserFromUsernameAndPassword("test", "test")).username);
+

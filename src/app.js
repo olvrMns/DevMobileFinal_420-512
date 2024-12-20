@@ -1,11 +1,9 @@
 import Express from 'express';
-import { getUser } from './db.js';
-import { StatusCodes } from 'http-status-codes';
+import { authRouter } from './routes/auth.route.js';
+import { rawgRouter } from './routes/rawg.route.js';
 
 export const app = Express();
 
-app.get("/users", async (request, response) => {
-    //let users = await getUsers();
-    response.status(StatusCodes.OK).send(null);
-});
+app.use(authRouter);
+app.use(rawgRouter);
 

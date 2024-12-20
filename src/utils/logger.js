@@ -23,13 +23,10 @@ const getTransportsFile = (level) => {
 const CustomLevelsObj = {
     notice: 1,
     info: 2,
-    infoMDB: 3,
-    debug: 4,
-    alert: 5,
-    warning: 6,
-    error: 7,
-    emerg: 8,
-    crit: 9,
+    debug: 3,
+    alert: 4,
+    warning: 5,
+    error: 6,
 }
 
 /**
@@ -44,11 +41,8 @@ export const LOGGER = createLogger({
         getTransportsFile("alert"),
         getTransportsFile("info"),
         getTransportsFile("error"),
-        getTransportsFile("crit"),
         getTransportsFile("debug"),
-        getTransportsFile("emerg"),
         getTransportsFile("notice"),
         getTransportsFile("warning"),
-        getTransportsFile("infoMDB"),
     ]
 });
