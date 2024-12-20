@@ -45,6 +45,24 @@ class DBQuerier {
 
 export const QUERIER = new DBQuerier();
 
+export async function getUserByUsernameOrEmailAndPassword(usernameOrEmail, password) {
+    
+    console.log(`Database : get user with username/email : ${usernameOrEmail} and password : ${password}`)
+    
+    const [users] = await QUERIER.execute(`SELECT * FROM user WHERE (username=? OR email=?) AND pwd=?;`,[usernameOrEmail,usernameOrEmail,password])
+    
+    
+    return users[0];
+} 
+
+
+export async function getUserByUsernameAndPassword(username, password){
+    
+    console.log(`Database : get users with username: ${username} and password : ${password}`)
+    
+    const [rows] = await QUERIER.execute(`SELECT * FROM user WHERE username=? and pwd=?`,[username,password])
+    return rows[0]
+}
 
 
 export async function getUserByUsernameOrEmail(username, email){
@@ -65,6 +83,37 @@ export async function createUser(email, username, password){
     return rows[0];
 }
 
+export async function getUserById(id){
+    
+    console.log(`Database : get users by Id : ${id}`)
+    
+    const [rows] = await QUERIER.execute(`SELECT * FROM user WHERE user_id=?`,[id])
+    return rows[0]
+}
 
+export async function updateUserProfile(userData){
+    //Modifie les données de l'utilisateur avec userData = {id,username,email}
+   
+    console.log(`Database : update users with userData.id : ${userData.id}`)
+    
+    const [rows] = await QUERIER.execute(`   UPDATE user
+                                        SET 
+                                            username = ?,
+                                            email = ?
+
+                                        WHERE user_id = ?;`,[userData.username,userData.email,userData.user_id])
+    return true
+}
+
+
+
+export async function deleteUserById(id){
+    
+    console.log(`Database : delete users with id : ${id}`)
+    
+    const status = await QUERIER.execute(`   DELETE FROM user
+                                        WHERE user_id = ?;`,[id])
+    return status[0].affectedRows
+}
 
 
