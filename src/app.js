@@ -1,5 +1,5 @@
 import Express from 'express';
-import { getUserByUsernameOrEmail,createUser,getUserByUsernameOrEmailAndPassword,getUserById,updateUserProfile,deleteUserById } from './db.js';
+import { getUserByUsernameOrEmail,createUser,getUserByUsernameOrEmailAndPassword,getUserById,updateUserProfile,deleteUserById,addFriend } from './db.js';
 import { StatusCodes } from 'http-status-codes';
 import cors from 'cors'
 import jwt from 'jsonwebtoken';
@@ -230,5 +230,27 @@ app.post("/users/authenticate", async (req, res) => {
     }
 });
 
+
+app.post("/users/:id/friends",async (req,res)=>{
+    const userId=req.params.id
+    const {friendId} =req.body;
+    
+    if (!friendId) {
+        return res.status(400).json({ error: "Friend ID missing" });
+    }
+    if (userId === friendId) {
+        return res.status(400).json({ error: "You cant add yourself as friend" });
+    }
+
+    try{
+        const result =await addFriend(userId,friendId);
+        res.status(201).json({message:"Friend added successfully ",result});
+
+    }catch(error){
+        console.log("Error adding friend",error);
+        res.status(500).json({ error: 'Internal server error.' });
+
+    }
+})
 
 
