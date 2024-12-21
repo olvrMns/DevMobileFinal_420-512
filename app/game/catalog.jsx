@@ -31,7 +31,6 @@ export default Catalog = () => {
     }, [])
 
     useEffect(() => {
-        
     }, [gameArray]) 
 
     return(
