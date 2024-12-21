@@ -2,12 +2,15 @@ DROP DATABASE IF EXISTS GAME_PICKER_DEV;
 CREATE DATABASE IF NOT EXISTS GAME_PICKER_DEV;
 USE GAME_PICKER_DEV;
 
--- DROP TABLE IF EXISTS game;
--- CREATE TABLE IF NOT EXISTS game(
---     game_id INT AUTO_INCREMENT,
---     name VARCHAR(50) NOT NULL,
---     PRIMARY KEY(game_id)
--- );
+
+DROP TABLE IF EXISTS game;
+CREATE TABLE IF NOT EXISTS game(
+    game_id INT AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL,
+    PRIMARY KEY(game_id)
+);
+
+
 
 DROP TABLE IF EXISTS user;
 CREATE TABLE IF NOT EXISTS user(
@@ -31,9 +34,12 @@ DROP TABLE IF EXISTS rel_friend;
 CREATE TABLE IF NOT EXISTS rel_friend(
     rel_id INT AUTO_INCREMENT, 
     id_origin_user INT NOT NULL,
-    id_added_user INT NOT NULL,
+    id_friend_user INT NOT NULL,
     added_date DATETIME DEFAULT (CURRENT_DATE()),
-    PRIMARY KEY(rel_id)
+    PRIMARY KEY(rel_id),
+    FOREIGN KEY (id_origin_user) REFERENCES user(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (id_friend_user) REFERENCES user(user_id) ON DELETE CASCADE,
+    UNIQUE(id_origin_user, id_friend_user)
 );
 
 DROP TABLE IF EXISTS release_notification;
