@@ -37,6 +37,7 @@ const Layout = () => {
               <Drawer.Screen name="auth" options={{headerShown:false}} />
               <Drawer.Screen name="menu" options={{headerShown:false}} />
               <Drawer.Screen name="[user]/friendForm"  options={{ headerShown: true }}/>
+              <Drawer.Screen name="[user]/showAllFriends"  options={{ headerShown: true }}/>
           </Drawer>
         </GestureHandlerRootView>
 
