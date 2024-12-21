@@ -46,7 +46,7 @@ const Signin = () => {
               console.log("SignIn good");
               setLoading(false)
               setForm({usernameOrEmail:"",pwd:""})
-              router.push(`../${result.id}/profile`)
+              router.push(`../${result.id}/privProfile`)
       
           } catch(error){
               setLoading(false)
