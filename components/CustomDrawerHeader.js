@@ -11,7 +11,7 @@ const CustomDrawerHeader = ({navigation, tabName}) => {
   const { theme, toggleTheme} = useTheme();
   const colors = colorsPalette[theme];
   return (
-    <SafeAreaView style={[styles.header,{backgroundColor:colors.background}]}>
+    <SafeAreaView className="bg-orange-100" style={[styles.header]}>
         
         <TouchableOpacity style={[styles.content]} onPress={() => {navigation.openDrawer();}}>
         <Text>
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     width:'100%',
-    justifyContent:'space-between'
+    justifyContent:'space-between',
   },
   title: {
     fontSize: 24,

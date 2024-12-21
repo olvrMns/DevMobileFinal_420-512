@@ -8,7 +8,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useState,useEffect} from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 const profile = () =>{
     const {theme} = useTheme();
@@ -109,7 +108,7 @@ const profile = () =>{
     <>
       <View className="h-full pb-16" style={{backgroundColor:colors.background_c1}}>
         <ScrollView>
-        <View className="w-full mt-10" >
+        <View className="w-full" >
         <View className="justify-between text-center items-center flex-row mt-16">
           <View className="flex-col items-start justify-start text-center" >
             {/* USERNAME */}
@@ -163,7 +162,7 @@ const profile = () =>{
         <View className="w-full items-center mt-20">
           <View className=""/>
 
-          <View className="text-center flex-row mt-32">
+          <View className="text-center flex-row mt-10">
             {/* MAP 3 FAV GAMES HERE (WHEN READY**) */}
             <View className="items-center">
               <Image id='gameImages' className="w-32 h-32 mx-2" source={require("../../assets/splash-icon.png")}></Image>
