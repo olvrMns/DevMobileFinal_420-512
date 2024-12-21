@@ -1,5 +1,5 @@
 import Express from 'express';
-import { getUserByUsernameOrEmail,createUser,getUserByUsernameOrEmailAndPassword,getUserById,updateUserProfile,deleteUserById,addFriend } from './db.js';
+import { getUserByUsernameOrEmail,createUser,getUserByUsernameOrEmailAndPassword,getUserById,updateUserProfile,deleteUserById,addFriend,getAllFriendsByUserId } from './db.js';
 import { StatusCodes } from 'http-status-codes';
 import cors from 'cors'
 import jwt from 'jsonwebtoken';
@@ -232,7 +232,7 @@ app.post("/users/authenticate", async (req, res) => {
 
 
 app.post("/users/:id/friends",async (req,res)=>{
-    const userId=req.params.id
+    const userId=req.params.id;
     const {friendId} =req.body;
     
     if (!friendId) {
@@ -250,6 +250,19 @@ app.post("/users/:id/friends",async (req,res)=>{
         console.log("Error adding friend",error);
         res.status(500).json({ error: 'Internal server error.' });
 
+    }
+})
+
+app.get("/users/:id/friends",async (req,res)=>{
+    const userId=req.params.id;
+    try{
+        const result = await getAllFriendsByUserId(userId);
+        res.status(201).json({message:"All friends ",result});
+
+
+    }catch(error){
+        console.error('Error during authenticate: ', error);
+        res.status(500).json({ error: 'Internal server error.' });
     }
 })
 
