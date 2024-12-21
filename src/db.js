@@ -154,4 +154,16 @@ export async function addFriend(userId,friendId) {
     return result[0];
 }
 
+export async function getAllFriendsByUserId(userId){
+    console.log(`Database: Fetching friends by user : ${userId}`);
 
+    const query=`SELECT user_id, username, email
+                FROM user
+                JOIN rel_friend 
+                ON id_friend_user=user_id
+                WHERE id_origin_user=?`;
+
+    const [result]=await QUERIER.execute(query,[userId]);
+    return result;
+
+}
