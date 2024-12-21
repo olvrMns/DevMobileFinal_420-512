@@ -44,9 +44,7 @@ const Signin = () => {
               const result = await signIn(form.usernameOrEmail,form.pwd)
               setLoading(false)
               setForm({usernameOrEmail:"",pwd:""})
-              router.push(`../${result.id}/friendForm`);
-              router.push(`../${result.id}/profile`)
-              
+              router.push(`../${result.id}/privProfile`)
       
           } catch(error){
               setLoading(false)

@@ -14,7 +14,8 @@ const AuthLayout = () => {
                 headerShown:false,
               }
             }>
-              
+              <Stack.Screen name="signin" options={{ headerShown: false }} />
+              <Stack.Screen name="menu" options={{ headerShown: false }} />
           </Stack>
         </GestureHandlerRootView>
     </>

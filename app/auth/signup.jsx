@@ -57,7 +57,7 @@ const SignUp = () => {
               
               setLoading(false)
               setForm({username:"", email:"", pwd:""})
-              router.push(`../${result.id}/profile`)
+              router.push(`../${result.id}/privProfile`)
       
           } catch(error){
               setLoading(false)
