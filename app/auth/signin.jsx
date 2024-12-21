@@ -41,12 +41,12 @@ const Signin = () => {
       
           try{
               setLoading(true)
-              console.log("Trying");
               const result = await signIn(form.usernameOrEmail,form.pwd)
-              console.log("SignIn good");
               setLoading(false)
               setForm({usernameOrEmail:"",pwd:""})
+              router.push(`../${result.id}/friendForm`);
               router.push(`../${result.id}/profile`)
+              
       
           } catch(error){
               setLoading(false)

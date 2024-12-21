@@ -27,13 +27,15 @@ const Layout = () => {
           <Drawer 
               screenOptions={{
                 swipeEnabled:true,
-                headerShown:false,
+               // headerShown:false,
+                header: ({navigation}) => <CustomDrawerHeader navigation={navigation} tabName={""} />
 
               
               }
             }>
               <Drawer.Screen name="index" options={{headerShown:false}} />
               <Drawer.Screen name="auth" options={{headerShown:false}} />
+              <Drawer.Screen name="[user]/friendForm"  options={{ headerShown: true }}/>
           </Drawer>
         </GestureHandlerRootView>
 
