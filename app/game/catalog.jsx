@@ -7,7 +7,6 @@ import { View } from "react-native";
 import { Image } from "react-native";
 
 
-//{id: 5, name: "wesh", image: "https://media.rawg.io/media/games/20a/20aa03a10cda45239fe22d035c0ebe64.jpg"}, {id: 7, name: "help", image: "https://media.rawg.io/media/games/511/5118aff5091cb3efec399c808f8c598f.jpg"}
 export default Catalog = () => {
     const [gameArray, setGameArray] = useState([]);
     const [page, setPage] = useState(1);
@@ -15,11 +14,11 @@ export default Catalog = () => {
     const updateGameArray = async () => {
         const nPage = await getGames(page);
         setGameArray([...gameArray, ...nPage]);
+        setPage(page + 1)
     }
 
     const handleLoadMore = async () => {
         await updateGameArray();
-        setPage(page++)
     }
 
     const reset = () => {
@@ -28,7 +27,11 @@ export default Catalog = () => {
     }
 
     useEffect(() => {
-  
+        updateGameArray();
+    }, [])
+
+    useEffect(() => {
+        
     }, [gameArray]) 
 
     return(
@@ -52,7 +55,7 @@ const GameCard = (props) => {
     return(
         <View className="bg-orange-400 w-1/4 items-center p-2 rounded-3xl border-solid border-2 border-sky-500 m-3">
             <TouchableOpacity className="" onPress={handlePress}>
-                <Image className="w-20 h-20" source={{uri: props.game.background_image}}/>
+                <Image className="w-20 h-20 rounded-lg" source={{uri: props.game.background_image}}/>
                 <Text className="color-green-600">{props.game.name}</Text>
             </TouchableOpacity>
         </View>
