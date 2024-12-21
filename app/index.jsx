@@ -5,7 +5,6 @@ import { TouchableOpacity } from 'react-native'
 import { useTheme } from '../contexts/ThemeContext'
 import { Link, useRouter} from 'expo-router'
 import { colorsPalette } from '../assets/colorsPalette'
-import { Header } from 'react-native/Libraries/NewAppScreen'
 
 const  WIDTH_BTN = Dimensions.get('window').width - 56
 
