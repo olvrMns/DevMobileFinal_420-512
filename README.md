@@ -6,6 +6,9 @@
 
 ## npm install
     - expo
+    - @fortawesome/free-solid-svg-icons
+    - @fortawesome/free-brands-svg-icons
+    - @fortawesome/free-regular-svg-icons
 
 ### --save-dev
     - react-native-dotenv

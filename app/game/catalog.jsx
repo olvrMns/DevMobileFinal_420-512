@@ -1,20 +1,24 @@
 import { useEffect, useState } from "react"
-import { Text, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, ActivityIndicator } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context"
 import { getGames } from "../../lib/axios";
 import { View } from "react-native";
 import { Image } from "react-native";
+import { useRouter } from "expo-router";
 
 
 export default Catalog = () => {
     const [gameArray, setGameArray] = useState([]);
     const [page, setPage] = useState(1);
+    const [isLoading, setIsLoading] = useState(true);
 
     const updateGameArray = async () => {
+        setIsLoading(true);
         const nPage = await getGames(page);
         setGameArray([...gameArray, ...nPage]);
         setPage(page + 1)
+        setIsLoading(false);
     }
 
     const handleLoadMore = async () => {
@@ -35,11 +39,16 @@ export default Catalog = () => {
 
     return(
         <SafeAreaView>
+            {/* <View>
+                <TouchableOpacity className="">
+
+                </TouchableOpacity>
+            </View> */}
             <View className="h-3/5 w-full p-2 border-solid border-2 border-red-700">
                 <FlatList data={gameArray} renderItem={({item}) => <GameCard game={item}/>} keyExtractor={(item, index) => index.toString()} numColumns={3}/>
             </View>
             <TouchableOpacity className="bg-red-400 w-20 h-20 rounded-full items-center mt-10" onPress={handleLoadMore}>
-                <Text className="text-white m-auto">Load More</Text>
+                <Text className="text-white m-auto">View more</Text>
             </TouchableOpacity>
         </SafeAreaView>
     )
@@ -47,8 +56,10 @@ export default Catalog = () => {
 
 const GameCard = (props) => {
 
+    const router = useRouter();
+
     const handlePress = () => {
-        
+        router.push({pathname: "./gameProfil", params: props.game});
     }
 
     return(
