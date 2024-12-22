@@ -1,20 +1,69 @@
-import { LOGGER } from '../utils/logger.js';
+//import { LOGGER } from '../utils/logger.js';
+
+export const PAGE_SIZE = 10;
 
 /**
  * @note
- * 
+ * - 
+ * {
+ *  search,
+ *  page,
+ *  page_size, 
+ *  developers, 
+ *  platforms, 
+ *  genres, 
+ *  tags, 
+ *  publishers, 
+ *  ordering
+ * }
  */
-class RawgURLBuilder {
+class RawgURL {
 
+    url = `https://api.rawg.io/api/games?key=${process.env.RAWG_API_KEY}&page_size=${PAGE_SIZE}`
+    search;
+    page = 1;
+    developers;
+    platforms;
+    genres;
+    tags;
+    publishers
+    ordering;
+
+    constructor(params) {
+        this.processParams(params);
+    }
+
+    buildURL(key, value) {
+        this.url = this.url + `&${key}=${value}`;
+    }
+
+    processParams(params) {
+        for (const [key, value] of Object.entries(params)) 
+            this.buildURL(key, value);
+    }
+
+    static GetURL(params) {
+        return (new RawgURL(params)).url;
+    }
+
+    get [Symbol.toStringTag]() {
+        return this.url;
+    }
+
+}
+
+export const getParamsAsStr = (params) => {
+    let str = "";
+    for (const [key, value] of Object.entries(params)) str = str + `| ${key}:${value} `;
+    return str.slice(1);
 }
 
 /**
  * @note
- * 
+ * `https://api.rawg.io/api/games?key=${process.env.RAWG_API_KEY}&page_size=${PAGE_SIZE}&page=${page ? page : 1}`
  */
 export class RawgService {
 
-    static page_size = 10;
 
     static async fetch_(url) {
         try {
@@ -26,16 +75,8 @@ export class RawgService {
         }
     }
 
-    static async getAllGames(page) {
-        return await this.fetch_(`https://api.rawg.io/api/games?key=${process.env.RAWG_API_KEY}&page_size=${this.page_size}&page=${page ? page : 1}`);
+    static async getAllGames(params) {
+        return await this.fetch_(RawgURL.GetURL(params));
     }
-
-    // static async getAllGamesByDevelopers(page = 1, developers) {
-    //     return await this.fetch_(`https://api.rawg.io/api/games?key=${process.env.RAWG_API_KEY}&page_size=${this.page_size}&page=1&developers=${developers}`);
-    // }
-
-    // static async getAllGamesByGenres(page = 1, genres) {
-    //     return await this.fetch_(`https://api.rawg.io/api/games?key=${process.env.RAWG_API_KEY}&page_size=${this.page_size}&page=1&genres=${genres}`);
-    // }
 
 }
