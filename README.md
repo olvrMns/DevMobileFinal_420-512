@@ -9,6 +9,7 @@
     - @fortawesome/free-solid-svg-icons
     - @fortawesome/free-brands-svg-icons
     - @fortawesome/free-regular-svg-icons
+    - react-native-element-dropdown
 
 ### --save-dev
     - react-native-dotenv

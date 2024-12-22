@@ -16,7 +16,7 @@ export default GameProfil = () => {
     const checkFavoritedState = async () => {
         try {
             let userId = await getIdFromJwt();
-            if (userId) setFavorited(handleFavorite(userId, game.id, "check"));
+            if (userId) setFavorited(await handleFavorite(userId, game.id, "check"));
         } catch(ex) {
             console.log(ex);
         }
@@ -24,7 +24,6 @@ export default GameProfil = () => {
 
     useEffect(() => {
         checkFavoritedState();
-        console.log(game.id)
     }, [])
 
     useEffect(() => {
