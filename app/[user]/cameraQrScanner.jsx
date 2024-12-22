@@ -1,8 +1,8 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import { CameraView, CameraType, useCameraPermissions,Camera } from 'expo-camera';
+import { Camera, useCameraPermissions,CameraView} from 'expo-camera';
 import { Button, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {useRouter,useGlobalSearchParams} from "expo-router"
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { addFriend } from "../../lib/axios";
 
 const cameraQrScanner=()=>{
@@ -10,28 +10,31 @@ const cameraQrScanner=()=>{
     const [isScanned, setIsScanned] = useState(false);
     const router=useRouter();
     const glob = useGlobalSearchParams();
-    const [friendId, setFriendId] = useState(""); 
-    const [isLoading, setIsLoading] = useState(false);
     
+    const [isLoading, setIsLoading] = useState(false);
+
     
 
-    const scanning=async(friendId)=>{
+
+    const scanning=async({type,data})=>{
         if(isScanned){
             return;
         }
         setIsScanned(true)
-        setFriendId(friendId.friendId);     
+        
+        console.log("Hello",data);
+        alert("QR Code Scanned");   
         try{
-            await handleAddFriend()
-            router.back();
+            await handleAddFriend(data)
+            router.push(`../${glob.user}/privProfile`);
         }   catch(error){
             console.log("Error",error)
         }
     }
-    const handleAddFriend=async()=>{
+    const handleAddFriend=async(friendId)=>{
         if (isLoading) return; 
         setIsLoading(true);
-         const [isLoading, setIsLoading] = useState(false);
+        
         try{
             const addingFriend=await addFriend(glob.user,friendId)
             console.log("success in adding friend")
@@ -39,7 +42,10 @@ const cameraQrScanner=()=>{
             console.log(error);
         }
         finally {
-            setIsLoading(false);
+            
+            setTimeout(() => {
+                setIsScanned(false);
+            }, 2000);  
         }
     }
     if (!permission) {
@@ -61,9 +67,9 @@ return (
     <SafeAreaView style={styles.container}>
         <Text>QR code scanner to add friend</Text>
         <CameraView  style={styles.camera} 
-        facing="back"
-        type={CameraView.Type.back}
-        onBarcodeScanned={scanning}>
+       
+        onBarcodeScanned={isScanned?undefined:scanning}
+        >
             <View style={styles.overlay}>
             <View style={styles.scannerWindow}></View>
             </View>

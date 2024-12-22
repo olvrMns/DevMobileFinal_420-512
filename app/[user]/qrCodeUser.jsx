@@ -4,6 +4,7 @@ import { View,Text } from 'react-native';
 const qrCodeUser=()=>{
     const glob = useGlobalSearchParams();
     console.log(glob.user);
+    
     return (
         <View>
             <Text>Your QR code</Text>
