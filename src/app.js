@@ -4,14 +4,16 @@ import { StatusCodes } from 'http-status-codes';
 import cors from 'cors'
 import jwt from 'jsonwebtoken';
 import { rawgRouter } from './routes/rawg.route.js';
+import { gameRouter } from './routes/game.route.js'; 
 
 export const app = Express();
 
 const SECRET_KEY = 'your_secret_key';
 
 app.use(cors());
-app.use(rawgRouter)
 app.use(Express.json());
+app.use(rawgRouter);
+app.use(gameRouter);
 
 
 app.post("/users/signin", async (req, res) => {

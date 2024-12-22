@@ -45,22 +45,6 @@ class DBQuerier {
         }
     }
 
-    /**
-     * 
-     * @note
-     */
-    async query(query) {
-        try {
-            await this.openConnection();
-            await this.connection.query(query);
-            await this.closeConnection();
-        } catch(err) {
-            LOGGER.log("error", err.message);
-        } finally {
-            await this.closeConnection();
-        }
-    }
-
 }
 
 export const QUERIER = new DBQuerier();
@@ -166,4 +150,19 @@ export async function getAllFriendsByUserId(userId){
     const [result]=await QUERIER.execute(query,[userId]);
     return result;
 
+}
+
+export const insertFavorite = async (id_user, id_game) => {
+    const res = await QUERIER.execute(`INSERT INTO rel_favorite(id_user, id_game) values(?,?);`, [id_user, id_game]);
+    return res[0];
+}
+
+export const deleteFavorite = async (id_user, id_game) => {
+    const res = await QUERIER.execute(`DELETE FROM rel_favorite WHERE id_user=? AND id_game=?;`, [id_user, id_game]);
+    return res[0];
+}
+
+export const getFirstFavoriteByUserIdAndGameId = async (id_user, id_game) => {
+    const res = await QUERIER.execute(`SELECT * FROM rel_favorite WHERE id_user=? AND id_game=?;`, [id_user, id_game]);
+    return res[0];
 }
