@@ -1,8 +1,9 @@
 import Express from 'express';
-import { getUserByUsernameOrEmail,createUser,getUserByUsernameOrEmailAndPassword,getUserById,updateUserProfile,deleteUserById,addFriend,getAllFriendsByUserId, updateFriendDescription, deleteFriend } from './db.js';
+import { getUserByUsernameOrEmail,createUser,getUserByUsernameOrEmailAndPassword,getUserById,updateUserProfile,deleteUserById,addFriend,getAllFriendsByUserId, updateFriendDescription, deleteFriend, getFirstFavoriteByUserIdAndGameId } from './db.js';
 import { StatusCodes } from 'http-status-codes';
 import cors from 'cors'
 import jwt from 'jsonwebtoken';
+import { hash, compare, genSalt } from 'bcrypt';
 import { rawgRouter } from './routes/rawg.route.js';
 import { gameRouter } from './routes/game.route.js'; 
 
@@ -30,8 +31,10 @@ app.post("/users/signin", async (req, res) => {
         console.log(`End point request with user/email : ${usernameOrEmail} and pass : ${pwd}`)
 
         console.log(`hello`)
-
-        const user = await getUserByUsernameOrEmailAndPassword(usernameOrEmail, pwd);
+        const user = await getFirstFavoriteByUserIdAndGameId(usernameOrEmail);
+        if (!(await compare(pwd, user.pwd))) {
+            return res.status(401).json({ error: "Invalid username/email or password." });
+        }
         console.log(`Found user : ${user}`)
         if (!user) {
             return res.status(401).json({ error: "Invalid username/email or password." });
@@ -70,7 +73,7 @@ app.post("/users", async (req, res) => {
         }
 
           // Proceed to create the user
-        const newUser = await createUser( email, username, pwd );
+        const newUser = await createUser( email, username, await hash(pwd, await genSalt(10)));
         const token = jwt.sign({ userId:newUser.user_id }, SECRET_KEY, { expiresIn: '1h' });
         console.log(token)
         // Return the newly created user information

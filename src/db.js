@@ -203,3 +203,8 @@ export async function deleteFriend(userId,friendId){
     
 
 }
+
+export const getFirstUserByEmailOrUsername = async (usernameOrEmail) => {
+    const [res] = await QUERIER.execute(`SELECT * FROM user WHERE username = ? OR email = ? LIMIT 1;`, [usernameOrEmail, usernameOrEmail]);
+    return res[0];
+}
