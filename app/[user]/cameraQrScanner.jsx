@@ -4,6 +4,7 @@ import { Button, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {useRouter,useGlobalSearchParams} from "expo-router"
 import { useState,useEffect } from "react";
 import { addFriend } from "../../lib/axios";
+import Animated, { useAnimatedStyle, useSharedValue, withTiming,withRepeat} from 'react-native-reanimated';
 
 const cameraQrScanner=()=>{
     const [permission, requestPermission] = useCameraPermissions();
@@ -13,22 +14,45 @@ const cameraQrScanner=()=>{
     
     const [isLoading, setIsLoading] = useState(false);
 
-    
+    const scanLineAnimation=useSharedValue(-280);
+ 
+      
+       
+        
+
+
+    const animatedStyle=useAnimatedStyle(()=>({
+        transform:[{translateY:scanLineAnimation.value}]
+    }))
 
 
     const scanning=async({type,data})=>{
         if(isScanned){
             return;
         }
-        setIsScanned(true)
+        setIsScanned(true);
+        scanLineAnimation.value=-280;
         
-        console.log("Hello",data);
-        alert("QR Code Scanned");   
+        scanLineAnimation.value=withRepeat(
+            withTiming(0,{duration:1000}),
+            2,
+            true);
+        
+        console.log("Hello",data);  
         try{
             await handleAddFriend(data)
-            router.push(`../${glob.user}/privProfile`);
+            setTimeout(()=>{
+                router.push(`../${glob.user}/privProfile`);
+                alert("QR Code Scanned"); 
+            },2500)
+            
         }   catch(error){
             console.log("Error",error)
+        } finally{
+            setTimeout(()=>{
+                scanLineAnimation.value=-280;
+                setIsScanned(false);
+            },2500)
         }
     }
     const handleAddFriend=async(friendId)=>{
@@ -41,12 +65,7 @@ const cameraQrScanner=()=>{
         }catch(error){
             console.log(error);
         }
-        finally {
-            
-            setTimeout(() => {
-                setIsScanned(false);
-            }, 2000);  
-        }
+        
     }
     if (!permission) {
         // Camera permissions are still loading.
@@ -72,9 +91,10 @@ return (
         >
             <View style={styles.overlay}>
             <View style={styles.scannerWindow}></View>
+            <Animated.View style={[styles.scanLineAnimation,animatedStyle]}/>
             </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={() => {router.back()}} >
+          <TouchableOpacity style={styles.button} onPress={() => {router.push(`../${glob.user}/privProfile`)}} >
             <Text style={styles.text}>Exit</Text>
           </TouchableOpacity>
           </View>
@@ -131,6 +151,12 @@ const styles = StyleSheet.create({
         height: '40%',
         borderWidth: 2,
         borderColor: '#fff',
+    },
+    scanLineAnimation:{
+        width:'80%',
+        height: '40%',
+        height:2,
+        backgroundColor:'white',
     },
   });
 
