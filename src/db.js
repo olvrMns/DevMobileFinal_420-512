@@ -148,3 +148,24 @@ export async function getAllFriendsByUserId(userId){
     return result;
 
 }
+
+
+export async function updateFriendDescription(userId,friendId,updateDescription){
+    const [isAlreadyFriend]=await QUERIER.execute(`SELECT * FROM rel_friend WHERE id_origin_user=? AND id_friend_user=?`,[userId,friendId]);
+
+    if(isAlreadyFriend.length){
+        const query=`UPDATE rel_friend 
+                SET friendDescription=?
+                WHERE id_origin_user=? 
+                AND id_friend_user=?`;
+
+    const [result]=await QUERIER.execute(query,[updateDescription,userId,friendId]);
+    return result[0];
+    }
+    else{
+        throw new Error("Not friends")
+    }
+
+    
+
+}

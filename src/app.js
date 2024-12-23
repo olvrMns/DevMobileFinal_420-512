@@ -1,5 +1,5 @@
 import Express from 'express';
-import { getUserByUsernameOrEmail,createUser,getUserByUsernameOrEmailAndPassword,getUserById,updateUserProfile,deleteUserById,addFriend,getAllFriendsByUserId } from './db.js';
+import { getUserByUsernameOrEmail,createUser,getUserByUsernameOrEmailAndPassword,getUserById,updateUserProfile,deleteUserById,addFriend,getAllFriendsByUserId, updateFriendDescription } from './db.js';
 import { StatusCodes } from 'http-status-codes';
 import cors from 'cors'
 import jwt from 'jsonwebtoken';
@@ -264,6 +264,30 @@ app.get("/users/:id/friends",async (req,res)=>{
         console.error('Error during authenticate: ', error);
         res.status(500).json({ error: 'Internal server error.' });
     }
+})
+
+app.put("/users/:id/friends",async (req,res)=>{
+    const userId=req.params.id;
+    const {friendId,description} =req.body;
+
+    if (!friendId) {
+        return res.status(400).json({ error: "Friend ID missing" });
+    }
+    if (userId === friendId) {
+        return res.status(400).json({ error: "You cant add yourself as friend" });
+    }
+
+    try{
+        const result =await updateFriendDescription(userId,friendId,description);
+        res.status(200).json({message:"Friend description updated successfully ",result});
+
+    }catch(error){
+        console.log("Error updating friend",error);
+        res.status(500).json({ error: 'Internal server error.' });
+
+    }
+
+
 })
 
 
