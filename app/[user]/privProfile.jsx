@@ -109,15 +109,19 @@ const profile = () =>{
     router.push("/../../pages/menu");
   }
   const handleGamesPress = () => {
-    width.value = width.value + 90;
-    height.value = height.value + 90;
-    setTimeout(goingToMenu, 1500)
+    width.value = width.value + 50;
+    height.value = height.value + 50;
+    setTimeout(goingToMenu, 500)
     
   }
 
+  const handleQrPress = () => {
+    router.push("[user]/qrCodeUser");
+  }
+
   const animatedStyle = useAnimatedStyle(() => ({
-    width: withTiming(width.value, {duration:500}),
-    height: withTiming(height.value, {duration:500}),
+    width: withTiming(width.value, {duration:200}),
+    height: withTiming(height.value, {duration:200}),
   }));
 
   
@@ -165,7 +169,7 @@ const profile = () =>{
               <TouchableOpacity onPress={()=>{setIsEditing((prev)=>{return !prev})}} className=" items-center justify-center h-16 w-16 mr-6 rounded-2xl mt-2 bg-orange-500" >
                 <Icon  name="edit" size={30}  color={colors.lightText}/>
               </TouchableOpacity>  
-              <TouchableOpacity className=" items-center justify-center h-16 w-16 mr-6 rounded-2xl mt-2 bg-orange-500" >
+              <TouchableOpacity onPress={handleQrPress}className=" items-center justify-center h-16 w-16 mr-6 rounded-2xl mt-2 bg-orange-500" >
                 <Icon  name="qrcode" size={30}  color={colors.lightText}/>
               </TouchableOpacity>  
             </View>
