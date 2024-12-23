@@ -6,11 +6,14 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import CustomDrawerHeader from '../components/CustomDrawerHeader';
 import { ThemeProvider } from '../contexts/ThemeContext';
 import "../global.css"; 
+import { SettingsProvider } from '../contexts/settingsContext';
 
 const RootLayout = () => {
   return (
     <ThemeProvider>
-       <Layout/>
+      <SettingsProvider>
+        <Layout/>
+      </SettingsProvider>
     </ThemeProvider>
     
     

@@ -3,8 +3,7 @@ import { Text, TouchableOpacity, ActivityIndicator } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context"
 import { getGames } from "../../lib/axios";
-import { View } from "react-native";
-import { Image } from "react-native";
+import { View, Image } from "react-native";
 import { useRouter } from "expo-router";
 import { Dropdown } from "react-native-element-dropdown";
 import { selectorsData, defaultSelectText, styles as dropdownStyles } from "../../lib/dropdown";
@@ -96,30 +95,30 @@ export default Catalog = () => {
     )
 }
 
-const ParamSelector = (props) => {
+export const ParamSelector = (props) => {
     return(
         <Dropdown data={props.data} 
         onChange={(param) => props.onChange(param)} 
         maxHeight={200} labelField={"label"} 
         valueField={"value"}
-        style={dropdownStyles.dropdown}
-        selectedTextStyle={dropdownStyles.selectedTextStyle}
-        inputSearchStyle={dropdownStyles.inputSearchStyle}
+        style={props.dropdownStyle ? props.dropdownStyle : dropdownStyles.dropdown}
+        selectedTextStyle={props.selectedTextStyle ? props.selectedTextStyle : dropdownStyles.selectedTextStyle}
+        inputSearchStyle={props.inputSearchStyle ? props.inputSearchStyle : dropdownStyles.inputSearchStyle}
         value={defaultSelectText}/>
     )
 }
 
-const GameCard = (props) => {
+export const GameCard = (props) => {
 
     const router = useRouter();
 
-    const handlePress = () => {
+    const toGameProfil = () => {
         router.push({pathname: "./gameProfil", params: props.game});
     }
 
     return(
         <View className="bg-orange-400 w-1/4 items-center p-2 rounded-3xl border-solid border-2 border-sky-500 m-3">
-            <TouchableOpacity className="" onPress={handlePress}>
+            <TouchableOpacity className="" onPress={props.handlePress ? props.handlePress : toGameProfil}>
                 <Image className="w-20 h-20 rounded-lg" source={{uri: props.game.background_image}}/>
                 <Text className="color-green-600">{props.game.name}</Text>
             </TouchableOpacity>

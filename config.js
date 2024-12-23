@@ -1,1 +1,1 @@
-export default IP_BACKEND = "http://192.168.0.40:8082"
+export default IP_BACKEND = "http://192.168.2.36:5555"
