@@ -122,6 +122,7 @@ const Signin = () => {
                             placeholder='Entrez le mot de passe'
                             placeholderTextColor={"#000"}
                             value={form.pwd}
+                            secureTextEntry={true}
                           />
                         {alertMDP ? <Icon name="exclamation-triangle" size={30} color={colors.alert} style={{ position: 'absolute',right: 15, }}/>: null}
                       </View>
