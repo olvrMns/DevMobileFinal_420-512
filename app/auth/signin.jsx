@@ -66,14 +66,14 @@ const Signin = () => {
         <KeyboardAvoidingView 
                 keyboardVerticalOffset={0}
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                className="flex-1 justify-evenly items-center"
-                style={[{backgroundColor:colors.background_c1}]}
+                className="flex-1 justify-evenly items-center bg-gray-300"
+                
               >
           <SafeAreaView>
             <ScrollView showsVerticalScrollIndicator={false}>
-                  <Text className="text-7xl font-bold tracking-[2px] text-center uppercase pt-24 pb-16" style={{color:colors.primary}}>Game Picker</Text>
+                  <Text className="text-7xl font-bold tracking-[2px] text-center uppercase pt-24 pb-16 text-orange-600" >Game Picker</Text>
                   <View className="flex-1 justify-center items-center gap-8" >
-                    <Text className="text-4xl font-semibold pb-4" style={{color:colors.text}}>Connectez-vous</Text>
+                    <Text className="text-2xl font-semibold pb-4 text-gray-700" > Connect to your account</Text>
                     {loading ? <ActivityIndicator size="large" color={colors.primary} /> : null}
                     
                     {!msgErreur == "" ? 
@@ -85,52 +85,45 @@ const Signin = () => {
                     : null
                     }
                     
-                    <View>
-                      <View className="flex-row items-center">
+                    <View className="items-center justify-center ">
+                      <View className="flex-row items-center justify-center  ">
                         <TextInput
-                          className="justify-center py-5 rounded-lg text-center" 
-                          style={[{color:colors.text,backgroundColor:colors.background, width:WIDTH_BTN},alertIdentifier ? {paddingRight:56,borderWidth:2,borderColor:colors.alert} : {}]}
+                          className="justify-center py-5 rounded-lg text-center bg-yellow-200/30 w-80 border " 
                           onChangeText={(item) => {setForm({...form,usernameOrEmail : item})}}
-                          placeholder="Entrez l'identifiant"
-                          placeholderTextColor={colors.secondary}
+                          placeholder="Enter username or email"
+                          placeholderTextColor={"#000"}
                           value={form.usernameOrEmail}
                           />
                         {alertIdentifier ? <Icon className="absolute right-4" name="exclamation-triangle" size={30} color={colors.alert} />: null}
                       </View>
                       
-                      <View className="justify-end items-end"  style={{width:WIDTH_BTN}} >
-                          <Link href="./recovery">
-                              <Text style={{color:colors.link}}>Identifiant oublié?</Text>
-                          </Link>
-                      </View>
-                      {alertIdentifier ? <Text className="pt-1" style={{color:colors.alert}}>Identifiant : Ce champs doit être rempli</Text> : null}
+                      
+                      {alertIdentifier ? <Text className="pt-1" style={{color:colors.alert}}>Username : this field MUST have an entry</Text> : null}
                     </View>
-                    <View>
-                      <View className="flex-row items-center" >
+                    <View className="items-center justify-center ">
+                      <View className="flex-row items-center justify-center " >
                         <TextInput
-                            className="justify-center py-5 rounded-lg text-center" 
-                            style={[{width:WIDTH_BTN,color:colors.text,backgroundColor:colors.background},alertMDP ? {paddingRight:56,borderWidth:2,borderColor:colors.alert} : {}]}
+                            className="justify-center py-5 rounded-lg text-center bg-yellow-200/30 w-80 border" 
                             onChangeText={(item) => {setForm({...form,pwd : item})}}
                             placeholder='Entrez le mot de passe'
-                            placeholderTextColor={colors.secondary}
+                            placeholderTextColor={"#000"}
                             value={form.pwd}
                           />
                         {alertMDP ? <Icon name="exclamation-triangle" size={30} color={colors.alert} style={{ position: 'absolute',right: 15, }}/>: null}
                       </View>
                       <View className="justify-end items-end"  style={{width:WIDTH_BTN}} >
-                        <Link href="./recovery">
-                            <Text style={{color:colors.link}}>Mot de passe oublié?</Text>
-                        </Link>
+                        
                       </View>
-                      {alertMDP? <Text className="pt-1" style={{color:colors.alert}}>Mot de passe : Ce champs doit être rempli</Text> : null}
+                      {alertMDP? <Text className="pt-1" style={{color:colors.alert}}>Password : this field MUST have an entry</Text> : null}
                     
                     </View>
-                      <TouchableOpacity className="py-4 rounded-xl px-3" style={[{width:WIDTH_BTN,color:colors.text,backgroundColor:colors.primary}]} onPress={submit}>
-                          <Text className="text-center font-medium text-2xl" style={[{color:colors.lightText}]}>Se connectez</Text>
+                      <TouchableOpacity className="py-4 rounded-xl px-3 bg-yellow-400/55 "  onPress={submit}>
+                          <Text className="text-center font-medium text-xl p-4 font-semibold capitalize" >Log into your games!</Text>
                       </TouchableOpacity>
-                    <View className="border-b border-gray-300 my-2.5 w-3/4" />
-                      <TouchableOpacity className="py-4 rounded-xl px-3 justify-center mb-10" style={[{color:colors.text , backgroundColor:colors.secondary}]} onPress={() => router.push("./signup")}>
-                          <Text className="text-center font-medium text-2xl" style={[{color:colors.lightText}]}>Créez un compte</Text>
+                    <View className="border-b border-gray-300 w-3/4 " />
+                    <Text className="text-sm font-semibold text-gray-700">Don't have an account?</Text>
+                      <TouchableOpacity className="py-4 rounded-xl px-4 justify-start mb-10 bg-orange-400/70"  onPress={() => router.push("./signup")}>
+                          <Text className="text-center font-medium text-2xl text-gray-700 capitalize" >Create an account</Text>
                       </TouchableOpacity>
                     </View>
                   </ScrollView>
