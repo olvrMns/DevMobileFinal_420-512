@@ -1,14 +1,15 @@
 import { Image, Text, View, TextInput, ScrollView,TouchableOpacity, Modal, FlatList, Dimensions,ActivityIndicator} from 'react-native'
 import React, { useState, useEffect } from 'react';
 import { getAllFriendsByUserId, updateFriendDescription,deleteFriend } from '../../lib/axios'
-import {useGlobalSearchParams } from 'expo-router';
 import { useTheme } from '../../contexts/ThemeContext'
 import { colorsPalette } from '../../assets/colorsPalette'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { useAuthContext } from '../../contexts/authContext';
+import { useRouter } from 'expo-router';
 const showAllFriends=()=>{
     const [friends, setFriends] = useState([]);
-    const glob = useGlobalSearchParams();
+    const authContext = useAuthContext();
     const {theme} = useTheme()
     const router = useRouter();
     const colors = colorsPalette[theme]
@@ -22,7 +23,7 @@ const showAllFriends=()=>{
     const loadFriends=async () => {
         try{
             setLoading(true);
-            const friendsData=await getAllFriendsByUserId(glob.user);
+            const friendsData=await getAllFriendsByUserId(authContext.userId);
             setFriends(friendsData.result);
             setLoading(false);
         }catch (error){
@@ -91,7 +92,7 @@ const showAllFriends=()=>{
 
  const handleDelete=async(friendId)=>{
     try{
-             const deleteFriendRes = await deleteFriend(glob.user,friendId)
+             const deleteFriendRes = await deleteFriend(authContext.userId,friendId)
              if(deleteFriendRes){
                 setFriends(friends.filter(friend=>friend.user_id!==friendId))
              }
@@ -135,10 +136,10 @@ const showAllFriends=()=>{
   }
 
   const handleCamera = () =>{
-    router.push(glob.user + "/" + "cameraQrScanner");
+    router.push(authContext.userId + "/" + "cameraQrScanner");
   }
   const handleForm = () =>{
-    router.push(glob.user + "/" + "friendForm");
+    router.push(authContext.userId + "/" + "friendForm");
   }
 
   return (

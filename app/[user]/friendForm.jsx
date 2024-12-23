@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTheme } from '../../contexts/ThemeContext'
 import { addFriend } from '../../lib/axios'
 import {useGlobalSearchParams } from 'expo-router';
+import { useAuthContext } from '../../contexts/authContext'
 
 const  WIDTH_BTN = Dimensions.get('window').width - 56
 
@@ -17,15 +18,16 @@ const friendForm=()=>{
     const [msgErreur, setMsgErreur] = useState("")
     const [loading, setLoading] = useState(false)
     const [friendId, setFriendId] = useState(""); 
-    const glob = useGlobalSearchParams();
+    //const glob = useGlobalSearchParams();
     const [friendDescription,setFriendDescription]=useState("");
+    const authContext = useAuthContext();
 
 
     const handleAddFriend=async()=>{
         
         try{
             setLoading(true);
-            const addingFriend=await addFriend(glob.user,friendId,friendDescription)
+            const addingFriend=await addFriend(authContext.userId, friendId,friendDescription)
             setLoading(false);
             setMsgErreur("")
             console.log("success in adding friend")

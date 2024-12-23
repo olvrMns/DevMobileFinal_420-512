@@ -1,23 +1,36 @@
 import {Text,TextInput, ScrollView,View,TouchableOpacity,KeyboardAvoidingView,Dimensions,ActivityIndicator,Platform} from 'react-native'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { colorsPalette } from '../../assets/colorsPalette'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Link, useRouter} from 'expo-router'
 import { useTheme } from '../../contexts/ThemeContext'
-import { signIn } from '../../lib/axios'
+import { getIdFromJwt, signIn } from '../../lib/axios'
+import { useAuthContext } from '../../contexts/authContext'
 
 const  WIDTH_BTN = Dimensions.get('window').width - 56
 
 const Signin = () => { 
     const router = useRouter()
+    const authContext = useAuthContext();
     const { theme } = useTheme()
     const [alertIdentifier, setAlertIdentifier] = useState(false)
     const [alertMDP, setAlertMDP] = useState(false)
     const [msgErreur, setMsgErreur] = useState("")
     const [loading, setLoading] = useState(false)
     const colors = colorsPalette[theme]
-
     const [form, setForm] = useState({usernameOrEmail:"",pwd:""})
+
+    const checkAuth = async () => {
+      const id = await getIdFromJwt();
+      if (id) {
+        authContext.setUserId(id);
+        router.push(`../.../privProfile`);
+      }
+    }
+
+    useEffect(() => {
+      checkAuth();
+    }, []);
 
     const submit= async () =>{
         if(form.usernameOrEmail == "" || form.pwd == ""){
