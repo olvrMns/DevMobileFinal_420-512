@@ -120,7 +120,7 @@ export async function deleteUserById(id){
     return status[0].affectedRows
 }
 
-export async function addFriend(userId,friendId) {
+export async function addFriend(userId,friendId,description) {
     console.log(`Database: friend relation to user: ${userId} and friend: ${friendId}`);
 
    
@@ -130,8 +130,9 @@ export async function addFriend(userId,friendId) {
     if(isAlreadyFriend.length){
         throw new Error("Already friends");
     }
+    const descriptionText=description?description:null;
     
-    const [result]=await QUERIER.execute(`INSERT INTO rel_friend (id_origin_user,id_friend_user) VALUES (?,?)`,[userId,friendId]);
+    const [result]=await QUERIER.execute(`INSERT INTO rel_friend (id_origin_user,id_friend_user,friendDescription) VALUES (?,?,?)`,[userId,friendId,descriptionText]);
 
     console.log("Friend added");
 
@@ -141,7 +142,7 @@ export async function addFriend(userId,friendId) {
 export async function getAllFriendsByUserId(userId){
     console.log(`Database: Fetching friends by user : ${userId}`);
 
-    const query=`SELECT user_id, username, email
+    const query=`SELECT user_id, username, email,friendDescription
                 FROM user
                 JOIN rel_friend 
                 ON id_friend_user=user_id
@@ -165,4 +166,40 @@ export const deleteFavorite = async (id_user, id_game) => {
 export const getFirstFavoriteByUserIdAndGameId = async (id_user, id_game) => {
     const res = await QUERIER.execute(`SELECT * FROM rel_favorite WHERE id_user=? AND id_game=?;`, [id_user, id_game]);
     return res[0];
+}
+
+export async function updateFriendDescription(userId,friendId,updateDescription){
+    const [isAlreadyFriend]=await QUERIER.execute(`SELECT * FROM rel_friend WHERE id_origin_user=? AND id_friend_user=?`,[userId,friendId]);
+
+    if(isAlreadyFriend.length){
+        const query=`UPDATE rel_friend 
+                SET friendDescription=?
+                WHERE id_origin_user=? 
+                AND id_friend_user=?`;
+
+    const [result]=await QUERIER.execute(query,[updateDescription,userId,friendId]);
+    return result[0];
+    }
+    else{
+        throw new Error("Not friends")
+    }
+    
+
+}
+
+export async function deleteFriend(userId,friendId){
+    const [isAlreadyFriend]=await QUERIER.execute(`SELECT * FROM rel_friend WHERE id_origin_user=? AND id_friend_user=?`,[userId,friendId]);
+
+    if(!isAlreadyFriend.length){
+        throw new Error("Not friends")
+
+    
+    }
+
+    const [result]=await QUERIER.execute(`DELETE FROM rel_friend WHERE id_origin_user=? AND id_friend_user=?`,[userId,friendId]);
+    
+   
+    return result.affectedRows;
+    
+
 }
