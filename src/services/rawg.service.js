@@ -73,4 +73,13 @@ export class RawgService {
         return await this.fetch_(RawgURL.GetURL(params, page_size));
     }
 
+    /**
+     * @note
+     * need rawg.io prenium to access all the trailers...... 
+     */
+    static async getPreview(gameId) {
+        const res = await fetch(`https://api.rawg.io/api/games/${gameId}/movies?key=${process.env.RAWG_API_KEY}`);
+        return (await res.json()).preview;
+    }
+
 }

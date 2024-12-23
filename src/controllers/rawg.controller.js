@@ -15,4 +15,15 @@ export class RawgController {
         }
     }
 
+    static async getPreview(request, response) {
+        try {
+            LOGGER.log("info", `GetPreview Request Received [gameId:${request.body.gameId}]...`);
+            const res = await RawgService.getPreview(request.body.gameId);
+            response.status(StatusCodes.OK).send(res);
+        } catch(ex) {
+            LOGGER.log("error", ex.message)
+            response.status(StatusCodes.BAD_GATEWAY).send(null);
+        }
+    }
+
 }
