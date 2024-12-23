@@ -7,7 +7,7 @@ export class RawgController {
     static async getGames(request, response) {
         try {
             LOGGER.log("info", `GetGames Request Received [params:${getParamsAsStr(request.body.params)}]...`);
-            const res = await RawgService.getAllGames(request.body.params);
+            const res = await RawgService.getAllGames(request.body.params, request.body.page_size);
             response.status(StatusCodes.OK).send(res);
         } catch(ex) {
             LOGGER.log("error", ex.message)

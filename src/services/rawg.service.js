@@ -1,6 +1,6 @@
 //import { LOGGER } from '../utils/logger.js';
 
-export const PAGE_SIZE = 10;
+export const DEFAULT_PAGE_SIZE = 9;
 
 /**
  * @note
@@ -19,17 +19,11 @@ export const PAGE_SIZE = 10;
  */
 class RawgURL {
 
-    url = `https://api.rawg.io/api/games?key=${process.env.RAWG_API_KEY}&page_size=${PAGE_SIZE}`
-    search;
-    page = 1;
-    developers;
-    platforms;
-    genres;
-    tags;
-    publishers
-    ordering;
+    url = `https://api.rawg.io/api/games?key=${process.env.RAWG_API_KEY}`
+    page_size;
 
-    constructor(params) {
+    constructor(params, page_size) {
+        this.buildURL("page_size", page_size ? page_size : DEFAULT_PAGE_SIZE);
         this.processParams(params);
     }
 
@@ -42,8 +36,8 @@ class RawgURL {
             this.buildURL(key, value);
     }
 
-    static GetURL(params) {
-        return (new RawgURL(params)).url;
+    static GetURL(params, page_size) {
+        return (new RawgURL(params, page_size)).url;
     }
 
     get [Symbol.toStringTag]() {
@@ -75,8 +69,8 @@ export class RawgService {
         }
     }
 
-    static async getAllGames(params) {
-        return await this.fetch_(RawgURL.GetURL(params));
+    static async getAllGames(params, page_size) {
+        return await this.fetch_(RawgURL.GetURL(params, page_size));
     }
 
 }
