@@ -29,6 +29,7 @@
 - jsonwebtoken
 - http-status-codes
     ### --save-dev
+    - @babel/preset-env
     - cross-env
     - nodemon
 

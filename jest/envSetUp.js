@@ -1,0 +1,10 @@
+process.env.SERVER_PORT=5555
+process.env.EXPIRES_IN=null
+process.env.REFRESH_EXPIRES_IN=null
+process.env.PRIVATE_KEY=null
+process.env.DB_USER="root"
+process.env.DB_PWD=""
+process.env.DB_PORT=3306
+process.env.DB_HOST="localhost"
+process.env.DB_NAME="GAME_PICKER_DEV"
+process.env.RAWG_API_KEY="1171c434bf61477aa696aaf01f44fa21"
