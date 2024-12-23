@@ -7,11 +7,13 @@ import { handleFavorite, getIdFromJwt } from "../../lib/axios";
 import { faHeart } from "@fortawesome/free-solid-svg-icons"; 
 import { faHeart as emptyHeartIcon } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { useSettingsContext } from "../../contexts/settingsContext";
 
 
 export default GameProfil = () => {
     const game = useLocalSearchParams();
     const [favorited, setFavorited] = useState(false);
+    const settingsContext = useSettingsContext();
 
     const checkFavoritedState = async () => {
         try {
@@ -47,6 +49,7 @@ export default GameProfil = () => {
             <View className="w-full h-1/3 border-2 border-red-600 mb-4 p-4">
                 <Text className="font-extrabold text-4xl">{game.name}</Text>
                 <Text className="">{game.rating}/{game.rating_top}</Text>
+                <Text>{settingsContext.showPlatforms ? <Text>OUI</Text> : <Text>NON</Text>}</Text>
             </View>
 
             <View className="w-full h-1/3 border-2 border-red-600 mb-4 p-4">
