@@ -1,15 +1,17 @@
 import QRCode from 'react-native-qrcode-svg';
 import { View,Text, TouchableOpacity } from 'react-native';
 import { useRouter, useGlobalSearchParams } from 'expo-router';
+import { useAuthContext } from '../../contexts/authContext';
 
 const qrCodeUser=()=>{
-    const glob = useGlobalSearchParams();
+    //const glob = useGlobalSearchParams();
+    const authContext = useAuthContext();
 
 
     const router = useRouter();
 
     const handleGoBack = () => {
-        router.push(glob.user + "/" + "privProfile")
+        router.push(authContext.userId + "/" + "privProfile")
     }
 
     return (
@@ -17,7 +19,7 @@ const qrCodeUser=()=>{
             <TouchableOpacity onPress={handleGoBack}><Text>Go back to profile</Text></TouchableOpacity>
             <Text className="text-5xl text-center my-10 text-orange-600 font-bold ">Your QR code</Text>
             <QRCode className=""
-            value={glob.user}
+            value={authContext.userId}
             size={250}
             color='black'
             backgroundColor='white'/>

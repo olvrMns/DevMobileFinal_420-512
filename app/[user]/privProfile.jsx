@@ -9,12 +9,13 @@ import React, {useState,useEffect} from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming, Easing, withSpring} from 'react-native-reanimated';
+import { useAuthContext } from '../../contexts/authContext';
 
 const profile = () =>{
     const {theme} = useTheme();
     const colors = colorsPalette[theme];
-    const glob = useGlobalSearchParams();
     const router = useRouter()
+    const authContext = useAuthContext();
 
     const [username,setUsername] = useState("Default")
     const [email,setEmail] = useState('Default@abc.ca')
@@ -31,7 +32,7 @@ const profile = () =>{
     
           const loadData = async () => {
             try{
-              const profileData = await fetchProfileData(glob.user);
+              const profileData = await fetchProfileData(authContext.userId);
               if(!profileData) throw new Error('Failed fetching data -> no Data')
               setUsername(profileData.username);
               setEmail(profileData.email);
@@ -60,7 +61,7 @@ const profile = () =>{
       const userData = {
         username,
         email,
-        user_id: glob.user
+        user_id: authContext.userId
       }
       try{
         isSaved = await updateProfileData(userData);
@@ -72,15 +73,12 @@ const profile = () =>{
     }
     setIsEditSuccess(await saveProfileData())
     // setMessageVisible(true);
-    //Works but still display an error, TO FIX  
     setTimeout(() => {
       setMessageVisible(false);
     }, 2000); 
    
   };
 
-  
-  //Handle changes in editing/non-editing mode
   useEffect(()=>{
     if(!isMounted) return
     if(!isEditing){
@@ -88,14 +86,6 @@ const profile = () =>{
     }
   },[isEditing,theme])
 
-  // const supprimerUser = async () => {
-  //   try{
-  //     const deleteUser = await deleteUserById(glob.user)
-  //     logOut()
-  //   }catch(error){
-  //     console.log(error)
-  //   }
-  // }
   const logOut = () => {
     setToken('')
     router.push('/')

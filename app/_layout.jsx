@@ -7,16 +7,17 @@ import CustomDrawerHeader from '../components/CustomDrawerHeader';
 import { ThemeProvider } from '../contexts/ThemeContext';
 import "../global.css"; 
 import { SettingsProvider } from '../contexts/settingsContext';
+import { AuthProvider } from '../contexts/authContext';
 
 const RootLayout = () => {
   return (
     <ThemeProvider>
       <SettingsProvider>
-        <Layout/>
+        <AuthProvider>
+          <Layout/>
+        </AuthProvider>
       </SettingsProvider>
     </ThemeProvider>
-    
-    
   )
 }
 
