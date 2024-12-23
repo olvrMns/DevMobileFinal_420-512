@@ -138,7 +138,7 @@ export async function addFriend(userId,friendId,description) {
 export async function getAllFriendsByUserId(userId){
     console.log(`Database: Fetching friends by user : ${userId}`);
 
-    const query=`SELECT user_id, username, email
+    const query=`SELECT user_id, username, email,friendDescription
                 FROM user
                 JOIN rel_friend 
                 ON id_friend_user=user_id
