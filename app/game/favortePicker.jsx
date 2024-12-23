@@ -37,6 +37,10 @@ export default FavoritePicker = () => {
         setInSelectionMode((oldValue) => !oldValue);
     }
 
+    const handlePress = () => {
+        console.log("slt")
+    }
+
     useEffect(() => {
     }, [gameArray])
 
@@ -66,7 +70,7 @@ export default FavoritePicker = () => {
                     {inSelectionMode ? 
                         <Picker gameArray={gameArray}/> 
                     : 
-                        <FlatList data={gameArray} renderItem={({item}) => <GameCard game={item} handlePress={null}/>} keyExtractor={(item, index) => index.toString()} numColumns={3}/>
+                        <FlatList data={gameArray} renderItem={({item}) => <GameCard game={item} handlePress={handlePress}/>} keyExtractor={(item, index) => index.toString()} numColumns={3}/>
                     }
                 </View>
             </View>
