@@ -1,4 +1,4 @@
-import { getGames, setToken, getToken } from "../../lib/axios";
+import { getGames, setToken, getToken } from "../lib/axios";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
