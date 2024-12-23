@@ -165,7 +165,23 @@ export async function updateFriendDescription(userId,friendId,updateDescription)
     else{
         throw new Error("Not friends")
     }
+    
 
+}
+
+export async function deleteFriend(userId,friendId){
+    const [isAlreadyFriend]=await QUERIER.execute(`SELECT * FROM rel_friend WHERE id_origin_user=? AND id_friend_user=?`,[userId,friendId]);
+
+    if(!isAlreadyFriend.length){
+        throw new Error("Not friends")
+
+    
+    }
+
+    const [result]=await QUERIER.execute(`DELETE FROM rel_friend WHERE id_origin_user=? AND id_friend_user=?`,[userId,friendId]);
+    
+   
+    return result.affectedRows;
     
 
 }
