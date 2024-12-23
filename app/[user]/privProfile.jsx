@@ -109,9 +109,9 @@ const profile = () =>{
     router.push("/../../pages/menu");
   }
   const handleGamesPress = () => {
-    width.value = width.value + 90;
-    height.value = height.value + 90;
-    setTimeout(goingToMenu, 1500)
+    width.value = width.value + 50;
+    height.value = height.value + 50;
+    setTimeout(goingToMenu, 500)
     
   }
 
@@ -120,8 +120,8 @@ const profile = () =>{
   }
 
   const animatedStyle = useAnimatedStyle(() => ({
-    width: withTiming(width.value, {duration:500}),
-    height: withTiming(height.value, {duration:500}),
+    width: withTiming(width.value, {duration:200}),
+    height: withTiming(height.value, {duration:200}),
   }));
 
   

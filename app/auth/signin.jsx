@@ -118,7 +118,7 @@ const Signin = () => {
                     
                     </View>
                       <TouchableOpacity className="py-4 rounded-xl px-3 bg-yellow-400/55 "  onPress={submit}>
-                          <Text className="text-center font-medium text-xl p-4 font-semibold capitalize" >Log into your games!</Text>
+                          <Text className="text-center text-xl p-4 font-semibold capitalize" >Log into your games!</Text>
                       </TouchableOpacity>
                     <View className="border-b border-gray-300 w-3/4 " />
                     <Text className="text-sm font-semibold text-gray-700">Don't have an account?</Text>

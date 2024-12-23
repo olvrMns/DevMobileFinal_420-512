@@ -76,18 +76,17 @@ const SignUp = () => {
 
     return (
             <KeyboardAvoidingView 
-            className="flex-1 items-center"
-            style={{backgroundColor:colors.background_c1}}
+            className="flex-1 items-center bg-gray-300"
             keyboardVerticalOffset={0}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
             <SafeAreaView 
-            className="flex-1 items-center"
+            className="flex-1 items-center "
             >
             <ScrollView showsVerticalScrollIndicator={false}>
-                <Text className="text-7xl font-bold tracking-[2px] text-center uppercase pt-24 pb-16" style={{color:colors.primary}}>ChatMV</Text>
+                <Text className="text-2xl font-bold tracking-[2px] text-center uppercase pt-24 pb-16 text-orange-600 rotate-6" >Sign Up to GamePicker!</Text>
                 <View className="flex-1 justify-center items-center gap-8" >
-                <Text className="text-4xl font-semibold pb-4" style={{color:colors.text}}>Créez votre compte</Text>
+                <Text className="text-3xl font-semibold pb-4 mb-3 text-gray-700/90 -rotate-6" >Create your account!</Text>
                 {loading ? <ActivityIndicator size="large" color={colors.primary} /> : null}
                 {!msgErreur == "" ? 
                 <View
@@ -97,51 +96,45 @@ const SignUp = () => {
                 </View>
                 : null
                 }
-                <View>
-                    <View className="flex-row items-center" >
+                <View className="items-center justify-center ">
+                    <View className="flex-row items-center justify-center" >
                     <TextInput
-                        className="justify-center py-5 rounded-lg text-center focus:border-2" 
-                        style={[{width:WIDTH_BTN, color:colors.text, backgroundColor:colors.background, borderColor:colors.primary},alertEmail ? {paddingRight:56,borderWidth:2,borderColor:colors.alert} : {}]}
+                        className="justify-center py-5 rounded-lg text-center bg-yellow-200/30 w-80 border " 
                         onChangeText={(item) => {setForm({...form,email : item})}}
-                        placeholder="Entrez votre courriel"
-                        placeholderTextColor={colors.secondary}
+                        placeholder="Enter your email"
+                        placeholderTextColor={"#000"}
                         value={form.email}
                         />
                     {alertEmail ? <Icon className="absolute right-4" name="exclamation-triangle" size={30} color={colors.alert} />: null}
                     </View>
-                    {alertEmail ? <Text style={{color:colors.alert, paddingTop:5}}>Courriel : Ce champs doit être rempli</Text> : null}
+                    {alertEmail ? <Text style={{color:colors.alert, paddingTop:5}}>Email: the field must have an entry</Text> : null}
                 </View>
                 <View>
-                    <View style={{flexDirection:"row",alignItems:"center"}}>
+                    <View className="flex-row items-center justify-center">
                     <TextInput
-                        className="justify-center py-5 rounded-lg text-center focus:border-2" 
-                        style={[{width:WIDTH_BTN,color:colors.text, backgroundColor:colors.background, borderColor:colors.primary},alertUsername ? {paddingRight:56,borderWidth:2,borderColor:colors.alert} : {}]}
+                        className="justify-center py-5 rounded-lg text-center bg-yellow-200/30 w-80 border " 
                         onChangeText={(item) => {setForm({...form,username : item})}}
-                        placeholder="Entrez l'identifiant"
-                        placeholderTextColor={colors.secondary}
+                        placeholder="Enter username"
+                        placeholderTextColor={"#000"}
                         value={form.username}
                         />
                     {alertUsername ? <Icon className="absolute right-4" name="exclamation-triangle" size={30} color={colors.alert} />: null}
                     </View>
-                    {alertUsername ? <Text style={{color:colors.alert, paddingTop:5}}>Identifiant : Ce champs doit être rempli</Text> : null}
+                    {alertUsername ? <Text style={{color:colors.alert, paddingTop:5}}>Username: the field must have an entry</Text> : null}
                 </View>
-                <View className="border-2 rounded-lg">
-                    <View className="absolute z-10 -top-2.5 left-4 w-auto px-1" style={{backgroundColor:colors.background_c1}}><Text className="w-auto">Mot de passe</Text></View>
-                    <View className="m-3 z-0 flex-row items-center">
+                    <View className="flex-row items-center justify-center">
                     <TextInput
-                        className="justify-center py-5 rounded-lg text-center focus:border-2" 
-                        style={[{width:WIDTH_BTN, color:colors.text, backgroundColor:colors.background, borderColor:colors.primary},alertMDP ? {paddingRight:56,borderWidth:2,borderColor:colors.alert} : {}]}
+                        className="justify-center py-5 rounded-lg text-center bg-yellow-200/30 w-80 border " 
                         onChangeText={(item) => {setForm({...form,pwd : item})}}
-                        placeholder='Entrez le mot de passe'
-                        placeholderTextColor={colors.secondary}
+                        placeholder='Enter new Password'
+                        placeholderTextColor={"#000"}
                         value={form.pwd}
                         />
                     {alertMDP ? <Icon className="absolute right-4" name="exclamation-triangle" size={30} color={colors.alert} />: null}
                     </View>
-                    {alertMDP? <Text style={{color:colors.alert, paddingTop:5}}>Mot de passe : Ce champs doit être rempli</Text> : null}
-                </View>
-                <TouchableOpacity className="py-4 rounded-xl px-3" style={[{width:WIDTH_BTN,color:colors.text, backgroundColor:colors.primary}]} onPress={submit}>
-                    <Text className="text-center font-medium text-2xl"  style={{color:colors.lightText}}>Créez le compte</Text>
+                    {alertMDP? <Text style={{color:colors.alert, paddingTop:5}}>Password: the field must have an entry</Text> : null}
+                <TouchableOpacity className="py-4 rounded-xl px-3 bg-orange-400/65" s onPress={submit}>
+                    <Text className="text-center font-medium text-2xl" >Create new Account!</Text>
                 </TouchableOpacity>
                 <View className="border-b border-gray-300 my-2.5 w-3/4" />
                 <Text class="text-3xl font-bold underline" style={{color:colors.text}}>If you already have an account <Link style={{color:colors.link}} href="./signin">Sign-in</Link></Text>    
