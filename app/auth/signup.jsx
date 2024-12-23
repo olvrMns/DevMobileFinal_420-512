@@ -1,11 +1,12 @@
 import {Text, View, TextInput, Dimensions, KeyboardAvoidingView, ActivityIndicator, ScrollView, Platform,TouchableOpacity} from 'react-native'
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import { colorsPalette } from '../../assets/colorsPalette'
 import { useRouter, Link} from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { signUp } from '../../lib/axios'
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { useTheme } from '../../contexts/ThemeContext'
+import { useAuthContext } from '../../contexts/authContext'
 
 const  WIDTH_BTN = Dimensions.get('window').width - 56
 
@@ -13,6 +14,7 @@ const SignUp = () => {
 
     const router = useRouter()
     const { theme } = useTheme()
+    const authContext = useAuthContext();
     const [alertUsername, setAlertUsername] = useState(false)
     const [alertEmail, setAlertEmail] = useState(false)
     const [alertMDP, setAlertMDP] = useState(false)
@@ -58,6 +60,7 @@ const SignUp = () => {
               setLoading(false)
               setForm({username:"", email:"", pwd:""})
               //Do not delete the routes, need it for the glob.user for all pages (Jimmy)
+              authContext.setUserId(result.id);
               router.push(`../${result.id}/qrCodeUser`)
               router.push(`../${result.id}/cameraQrScanner`)
               router.push(`../${result.id}/showAllFriends`)
