@@ -116,7 +116,7 @@ export async function deleteUserById(id){
     return status[0].affectedRows
 }
 
-export async function addFriend(userId,friendId) {
+export async function addFriend(userId,friendId,description) {
     console.log(`Database: friend relation to user: ${userId} and friend: ${friendId}`);
 
    
@@ -126,8 +126,9 @@ export async function addFriend(userId,friendId) {
     if(isAlreadyFriend.length){
         throw new Error("Already friends");
     }
+    const descriptionText=description?description:null;
     
-    const [result]=await QUERIER.execute(`INSERT INTO rel_friend (id_origin_user,id_friend_user) VALUES (?,?)`,[userId,friendId]);
+    const [result]=await QUERIER.execute(`INSERT INTO rel_friend (id_origin_user,id_friend_user,friendDescription) VALUES (?,?,?)`,[userId,friendId,descriptionText]);
 
     console.log("Friend added");
 

@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS rel_friend(
     rel_id INT AUTO_INCREMENT, 
     id_origin_user INT NOT NULL,
     id_friend_user INT NOT NULL,
+    friendDescription VARCHAR(255),
     added_date DATETIME DEFAULT (CURRENT_DATE()),
     PRIMARY KEY(rel_id),
     FOREIGN KEY (id_origin_user) REFERENCES user(user_id) ON DELETE CASCADE,

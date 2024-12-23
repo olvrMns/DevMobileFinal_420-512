@@ -233,7 +233,7 @@ app.post("/users/authenticate", async (req, res) => {
 
 app.post("/users/:id/friends",async (req,res)=>{
     const userId=req.params.id;
-    const {friendId} =req.body;
+    const {friendId,description} =req.body;
     
     if (!friendId) {
         return res.status(400).json({ error: "Friend ID missing" });
@@ -243,7 +243,7 @@ app.post("/users/:id/friends",async (req,res)=>{
     }
 
     try{
-        const result =await addFriend(userId,friendId);
+        const result =await addFriend(userId,friendId,description);
         res.status(201).json({message:"Friend added successfully ",result});
 
     }catch(error){
