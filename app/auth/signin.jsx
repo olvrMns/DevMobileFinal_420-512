@@ -58,6 +58,7 @@ const Signin = () => {
               setLoading(false)
               setForm({usernameOrEmail:"",pwd:""})
               //Do not delete the routes, need it for the glob.user for all pages (Jimmy)
+              authContext.setUserId(result.id);
               router.push(`../${result.id}/qrCodeUser`)
               router.push(`../${result.id}/cameraQrScanner`)
               router.push(`../${result.id}/showAllFriends`)

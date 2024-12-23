@@ -17,9 +17,9 @@ const profile = () =>{
     const router = useRouter()
     const authContext = useAuthContext();
 
-    const [username,setUsername] = useState("Default")
-    const [email,setEmail] = useState('Default@abc.ca')
-    const [profilePic, setProfilePic] = useState('chiot1')
+    const [username,setUsername] = useState("")
+    const [email,setEmail] = useState('')
+    const [profilePic, setProfilePic] = useState('')
 
     const [isEditing,setIsEditing] = useState(false)
     const [isModalVisible, setIsModalVisible] = useState(false)
@@ -32,6 +32,7 @@ const profile = () =>{
     
           const loadData = async () => {
             try{
+              console.log(authContext.userId)
               const profileData = await fetchProfileData(authContext.userId);
               if(!profileData) throw new Error('Failed fetching data -> no Data')
               setUsername(profileData.username);

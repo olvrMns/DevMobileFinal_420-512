@@ -1,5 +1,5 @@
 import { Image, Text, View, TextInput, ScrollView,TouchableOpacity, Modal, FlatList, Dimensions,ActivityIndicator} from 'react-native'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { colorsPalette } from '../../assets/colorsPalette'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTheme } from '../../contexts/ThemeContext'
@@ -22,6 +22,9 @@ const friendForm=()=>{
     const [friendDescription,setFriendDescription]=useState("");
     const authContext = useAuthContext();
 
+    useEffect(() => {
+        console.log(authContext.userId)
+    });
 
     const handleAddFriend=async()=>{
         
