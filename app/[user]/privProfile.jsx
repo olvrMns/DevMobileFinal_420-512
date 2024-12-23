@@ -3,7 +3,7 @@ import { useTheme } from '../../contexts/ThemeContext'
 import OverlayMessage from '../../components/OverlayMessage'
 import { colorsPalette } from '../../assets/colorsPalette'
 import {useGlobalSearchParams, useRouter } from 'expo-router';
-import { fetchProfileData, setToken, updateProfileData, deleteUserById } from '../../lib/axios'
+import { fetchProfileData, setToken, updateProfileData, deleteUserById, handleFavorite } from '../../lib/axios'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useState,useEffect} from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -25,8 +25,8 @@ const profile = () =>{
     const [isModalVisible, setIsModalVisible] = useState(false)
     const [messageVisible, setMessageVisible] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
-    const [isEditSuccess, setIsEditSuccess] = useState(false)
-
+    const [isEditSuccess, setIsEditSuccess] = useState(false);
+    const [favGames, setFavGames] = useState([]);
     useEffect(() => {
         // Fetch profile data
     
@@ -114,7 +114,6 @@ const profile = () =>{
     height: withTiming(height.value, {duration:200}),
   }));
 
-  
 
 
   return (
@@ -178,10 +177,15 @@ const profile = () =>{
 
           <View className="text-center flex-row mt-10">
             {/* MAP 3 FAV GAMES HERE (WHEN READY**) */}
-            <View className="items-center">
-              <Image id='gameImages' className="w-32 h-32 mx-2" source={require("../../assets/splash-icon.png")}></Image>
-              <Text id='gameName' className="">Nom de jeu 1</Text>
-            </View>
+            { 
+              favGames.map((item, i) =>{
+              <View className="items-center">
+                <Image id='gameImages' className="w-32 h-32 mx-2" source={require("../../assets/splash-icon.png")}></Image>
+                <Text id='gameName' className="">{item}</Text>
+              </View>
+              })
+            }
+            
             <View className="items-center">
               <Image id='gameImages' className="w-32 h-32 mx-2" source={require("../../assets/splash-icon.png")}></Image>
               <Text id='gameName' className="">Nom de jeu 2</Text>
