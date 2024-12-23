@@ -136,7 +136,7 @@ const SignUp = () => {
                         onChangeText={(item) => {setForm({...form,pwd : item})}}
                         placeholder='Enter new Password'
                         placeholderTextColor={"#000"}
-                        value={form.pwd}
+                        value={form.pwd} secureTextEntry={true}
                         />
                     {alertMDP ? <Icon className="absolute right-4" name="exclamation-triangle" size={30} color={colors.alert} />: null}
                     </View>
