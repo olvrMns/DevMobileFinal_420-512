@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useState,useEffect} from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming, Easing, withSpring} from 'react-native-reanimated';
 
 const profile = () =>{
     const {theme} = useTheme();
@@ -100,9 +101,27 @@ const profile = () =>{
     router.push('/')
   }
 
-  const handleGamesPress = () => {
-    router.push("../../pages/menu");
+  const width = useSharedValue(350);
+  const height = useSharedValue(170);
+
+  const goingToMenu = () => {
+    console.log("menu opening");
+    router.push("/../../pages/menu");
   }
+  const handleGamesPress = () => {
+    width.value = width.value + 90;
+    height.value = height.value + 90;
+    setTimeout(goingToMenu, 1500)
+    
+  }
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    width: withTiming(width.value, {duration:500}),
+    height: withTiming(height.value, {duration:500}),
+  }));
+
+  
+
 
   return (
     <>
@@ -121,6 +140,7 @@ const profile = () =>{
                   placeholder="Entrez l'identifiant"
                   placeholderTextColor={colors.secondary}
                   value={username}
+                  
                   />
                   
               } 
@@ -179,12 +199,12 @@ const profile = () =>{
             
           </View>
 
-          <View className="flex-row">
-            <TouchableOpacity onPress={handleGamesPress} className="bg-orange-500 items-center justify-center w-5/6 p-10 mt-20 rounded-full text-white flex-row ">
+          <Animated.View className="flex-row items-center justify-center align-middle" style={[animatedStyle]}>
+            <TouchableOpacity onPress={handleGamesPress} className="bg-orange-500 items-center justify-center w-5/6 p-10 rounded-full text-white flex-row ">
               <Text className="text-white font-bold text-2xl">Navigate games</Text>
               <Icon name='gamepad' size={40} className="ml-6" color={colors.lightText}/>
             </TouchableOpacity>
-          </View>
+          </Animated.View>
           
         </View>
         </ScrollView>
