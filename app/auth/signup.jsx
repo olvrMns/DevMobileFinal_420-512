@@ -57,6 +57,11 @@ const SignUp = () => {
               
               setLoading(false)
               setForm({username:"", email:"", pwd:""})
+              //Do not delete the routes, need it for the glob.user for all pages (Jimmy)
+              router.push(`../${result.id}/qrCodeUser`)
+              router.push(`../${result.id}/cameraQrScanner`)
+              router.push(`../${result.id}/showAllFriends`)
+              router.push(`../${result.id}/friendForm`)
               router.push(`../${result.id}/privProfile`)
       
           } catch(error){

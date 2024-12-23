@@ -44,6 +44,7 @@ const Signin = () => {
               const result = await signIn(form.usernameOrEmail,form.pwd)
               setLoading(false)
               setForm({usernameOrEmail:"",pwd:""})
+              //Do not delete the routes, need it for the glob.user for all pages (Jimmy)
               router.push(`../${result.id}/qrCodeUser`)
               router.push(`../${result.id}/cameraQrScanner`)
               router.push(`../${result.id}/showAllFriends`)

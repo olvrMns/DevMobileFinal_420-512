@@ -12,20 +12,22 @@ const friendForm=()=>{
     
     const { theme } = useTheme();
     const colors = colorsPalette[theme];
-     const [alertIdentifier, setAlertIdentifier] = useState(false)
+    const [alertIdentifier, setAlertIdentifier] = useState(false)
     const [alertMDP, setAlertMDP] = useState(false)
     const [msgErreur, setMsgErreur] = useState("")
     const [loading, setLoading] = useState(false)
     const [friendId, setFriendId] = useState(""); 
     const glob = useGlobalSearchParams();
+    const [friendDescription,setFriendDescription]=useState("");
 
 
     const handleAddFriend=async()=>{
         
         try{
             setLoading(true);
-            const addingFriend=await addFriend(glob.user,friendId)
+            const addingFriend=await addFriend(glob.user,friendId,friendDescription)
             setLoading(false);
+            setMsgErreur("")
             console.log("success in adding friend")
         }catch(error){
             setMsgErreur("Add id or Friend already added or can't add yourself as friend")
@@ -55,6 +57,14 @@ const friendForm=()=>{
             placeholderTextColor={colors.secondary}
             value={friendId}
             onChangeText={setFriendId}
+        />
+
+<TextInput className="justify-center py-5 rounded-lg text-center m-5" 
+            style={[{color:colors.text,backgroundColor:colors.background, width:WIDTH_BTN}]}
+            placeholder="Entrez une description de votre nouveau ami (Optionel)"
+            placeholderTextColor={colors.secondary}
+            value={friendDescription}
+            onChangeText={setFriendDescription}
         />
         <TouchableOpacity className="py-4 rounded-xl px-3" style={[{width:WIDTH_BTN,color:colors.text,backgroundColor:colors.primary}]} onPress={handleAddFriend}>
             <Text className="text-center font-medium text-2xl">Add friend</Text>
