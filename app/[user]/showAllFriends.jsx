@@ -4,6 +4,7 @@ import { getAllFriendsByUserId } from '../../lib/axios'
 import {useGlobalSearchParams } from 'expo-router';
 import { useTheme } from '../../contexts/ThemeContext'
 import { colorsPalette } from '../../assets/colorsPalette'
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const showAllFriends=()=>{
     const [friends, setFriends] = useState([]);
@@ -34,20 +35,16 @@ const showAllFriends=()=>{
         };
       }, []);
 
-   
-   
-      useEffect(() => {
-        console.log("Friends state:", friends); // Log after data is set
-      }, [friends]);
-    
   const renderFriends = ({item}) => {
     console.log("Rendering friend:", item); 
     return (
-      <View className="flex-row w-full py-2 pl-16">
-        <View className="w-4 h-full mx-3 rounded-full"/>
-        <Text style={{color:colors.text}}>{item.username}</Text>
-        <Text style={{color:colors.text}}>{item.email}</Text>
-      </View>
+      <SafeAreaView className="flex-row w-full py-2 pl-16">
+        <View className="flex-col justify-center"/>
+        <Text className="p-1" style={{color:colors.text}}>{item.username} |</Text>
+        <Text className="p-1"  style={{color:colors.text}}>{item.email} |</Text>
+        <Text className="p-1"  style={{color:colors.text,flexWrap:"wrap",flex:1}}>{item.friendDescription || "No description"}</Text>
+      
+      </SafeAreaView>
     )
   }
 
@@ -58,6 +55,11 @@ const showAllFriends=()=>{
     ) : (
         <>
         <Text>Friends list</Text>
+        <View className="flex-row">
+        <Text className="flex-1 text-center">Username</Text>
+        <Text className="flex-1 text-center">Email</Text>
+        <Text className="flex-1 text-center">Description</Text>
+        </View>
         <FlatList
         data={friends}
         keyExtractor={(item) => item.user_id.toString()}
