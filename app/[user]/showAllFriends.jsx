@@ -1,6 +1,6 @@
 import { Image, Text, View, TextInput, ScrollView,TouchableOpacity, Modal, FlatList, Dimensions,ActivityIndicator} from 'react-native'
 import React, { useState, useEffect } from 'react';
-import { getAllFriendsByUserId, updateFriendDescription } from '../../lib/axios'
+import { getAllFriendsByUserId, updateFriendDescription,deleteFriend } from '../../lib/axios'
 import {useGlobalSearchParams } from 'expo-router';
 import { useTheme } from '../../contexts/ThemeContext'
 import { colorsPalette } from '../../assets/colorsPalette'
@@ -88,30 +88,45 @@ const showAllFriends=()=>{
     
   };
 
- 
+ const handleDelete=async(friendId)=>{
+    try{
+             const deleteFriendRes = await deleteFriend(glob.user,friendId)
+             if(deleteFriendRes){
+                setFriends(friends.filter(friend=>friend.user_id!==friendId))
+             }
+           }catch(error){
+             console.log(error)
+           }
+ }
 
 
   const renderFriends = ({item}) => {
     console.log("Rendering friend:", item); 
     return (
-      <SafeAreaView className="flex-row w-full py-2 pl-16">
+      <SafeAreaView className="flex-row w-full ">
         <View className="flex-col justify-center"/>
         <Text className="p-1" style={{color:colors.text}}>{item.username} |</Text>
         <Text className="p-1"  style={{color:colors.text}}>{item.email} |</Text>
         {editingFriendId !==item.user_id?(
             <Text className="p-1"  style={{color:colors.text,flexWrap:"wrap",flex:1}}>{item.friendDescription || "No description"}</Text>
         ):(
-         <TextInput
+            <View style={{flexWrap:"wrap",flex:1}}>
+         <TextInput 
                           className="text-5xl px-16 text-center font-serif text-red-500 underline" 
                           onChangeText={setDescription}
                           placeholder="Entrez le nouveau description"
                           placeholderTextColor={colors.secondary}
                           value={description}
                           />
+                          </View>
         )}
         <TouchableOpacity onPress={()=>{handleEdit(item.user_id,item.friendDescription || "")}} className=" items-center justify-center h-16 w-16 mr-6 rounded-2xl mt-2 bg-orange-500" >
-        <Icon  name="edit" size={30}  color={colors.lightText}/>
+        <Icon  name="edit" size={30}  color={colors.lightText} style={{flexWrap:"wrap",flex:1}}/>
         </TouchableOpacity> 
+
+        <TouchableOpacity onPress={()=>{handleDelete(item.user_id)}} className=" items-center justify-center h-16 w-16 mr-6 rounded-2xl mt-2 bg-orange-500" >
+        <Icon  name="trash-alt" size={30}  color={colors.lightText} style={{flexWrap:"wrap",flex:1}}/>
+        </TouchableOpacity>
         
       
       </SafeAreaView>
