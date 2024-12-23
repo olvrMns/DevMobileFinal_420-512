@@ -1,11 +1,11 @@
 import { Image, Text, View, TextInput, ScrollView,TouchableOpacity, Modal, FlatList, Dimensions,ActivityIndicator} from 'react-native'
 import React, { useState, useEffect } from 'react';
-import { getAllFriendsByUserId } from '../../lib/axios'
+import { getAllFriendsByUserId, updateFriendDescription } from '../../lib/axios'
 import {useGlobalSearchParams } from 'expo-router';
 import { useTheme } from '../../contexts/ThemeContext'
 import { colorsPalette } from '../../assets/colorsPalette'
 import { SafeAreaView } from 'react-native-safe-area-context';
-
+import Icon from 'react-native-vector-icons/FontAwesome5';
 const showAllFriends=()=>{
     const [friends, setFriends] = useState([]);
     const glob = useGlobalSearchParams();
@@ -13,6 +13,10 @@ const showAllFriends=()=>{
     const colors = colorsPalette[theme]
     const [loading, setLoading] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
+    const [description,setDescription]=useState("");
+    const [isEditSuccess, setIsEditSuccess] = useState(false);
+    const [messageVisible, setMessageVisible] = useState(false);
+    const [editingFriendId, setEditingFriendId] = useState(null);
     useEffect(() => {
     const loadFriends=async () => {
         try{
@@ -35,6 +39,58 @@ const showAllFriends=()=>{
         };
       }, []);
 
+      const handleEdit=(friendId,description)=>{
+        if (editingFriendId === friendId) {
+            handleSave(friendId);
+
+        }
+        else{
+        setEditingFriendId(friendId);
+        setDescription(description);
+        }
+        
+
+      }
+
+       
+  const handleSave = async (friendId) => {
+    let isSaved=false;
+        
+          
+      try{
+        const updateFriends=[...friends];
+        updateFriends.forEach((friend,index)=>{
+          if(friend.user_id===friendId){
+              updateFriends[index].friendDescription=description;
+          }
+        })
+ 
+         isSaved = await updateFriendDescription(glob.user,friendId,description);
+
+        if (isSaved) {
+            setIsEditSuccess(true);
+            setEditingFriendId(null);
+      
+          
+        } else {
+            setIsEditSuccess(false);
+        }
+        return isSaved;
+        
+       
+      }catch(error){
+        console.log("Saving Error : " , error)
+      
+        setIsEditSuccess(false);
+      }
+      return isSaved
+    
+    
+  };
+
+ 
+
+
   const renderFriends = ({item}) => {
     console.log("Rendering friend:", item); 
     return (
@@ -42,7 +98,21 @@ const showAllFriends=()=>{
         <View className="flex-col justify-center"/>
         <Text className="p-1" style={{color:colors.text}}>{item.username} |</Text>
         <Text className="p-1"  style={{color:colors.text}}>{item.email} |</Text>
-        <Text className="p-1"  style={{color:colors.text,flexWrap:"wrap",flex:1}}>{item.friendDescription || "No description"}</Text>
+        {editingFriendId !==item.user_id?(
+            <Text className="p-1"  style={{color:colors.text,flexWrap:"wrap",flex:1}}>{item.friendDescription || "No description"}</Text>
+        ):(
+         <TextInput
+                          className="text-5xl px-16 text-center font-serif text-red-500 underline" 
+                          onChangeText={setDescription}
+                          placeholder="Entrez le nouveau description"
+                          placeholderTextColor={colors.secondary}
+                          value={description}
+                          />
+        )}
+        <TouchableOpacity onPress={()=>{handleEdit(item.user_id,item.friendDescription || "")}} className=" items-center justify-center h-16 w-16 mr-6 rounded-2xl mt-2 bg-orange-500" >
+        <Icon  name="edit" size={30}  color={colors.lightText}/>
+        </TouchableOpacity> 
+        
       
       </SafeAreaView>
     )
