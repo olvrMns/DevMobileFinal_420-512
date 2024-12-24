@@ -1,5 +1,13 @@
 # DESCRIPTION
 
+## Membres de l'équipe
+
+### Olivier Mansuy
+
+### Jimmy Nguyen
+
+### Gael Desforges-Paquin
+
 ## HOW TO START THE PROJECT (BACKEND & FRONTEND)
 - npm install
 - have a file named ".dev.env" with this specific RAWG_API_KEY (or your own) and your 
@@ -25,6 +33,10 @@ own MySQL settings located in the root folder
     - the data isn't stored, but used in realtime as needed in the catalog page
 - passwords are encrypted
 - ...
+
+## Description of the backend:
+
+### It is in the backend that we have all the endpoints and the SQL requests as well as the SQL schema
 
 ## REF
 - [fix __dir](https://stackoverflow.com/questions/64383909/dirname-is-not-defined-error-in-node-js-14-version)
