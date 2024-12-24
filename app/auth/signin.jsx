@@ -24,7 +24,7 @@ const Signin = () => {
       const id = await getIdFromJwt();
       if (id) {
         authContext.setUserId(id);
-        router.push(`../.../privProfile`);
+        router.push(`/user/privProfile`);
       }
     }
 
@@ -57,13 +57,12 @@ const Signin = () => {
               const result = await signIn(form.usernameOrEmail,form.pwd)
               setLoading(false)
               setForm({usernameOrEmail:"",pwd:""})
-              //Do not delete the routes, need it for the glob.user for all pages (Jimmy)
               authContext.setUserId(result.id);
-              router.push(`../${result.id}/qrCodeUser`)
-              router.push(`../${result.id}/cameraQrScanner`)
-              router.push(`../${result.id}/showAllFriends`)
-              router.push(`../${result.id}/friendForm`)
-              router.push(`../${result.id}/privProfile`)
+              // router.push(`../${result.id}/qrCodeUser`)
+              // router.push(`../${result.id}/cameraQrScanner`)
+              // router.push(`../${result.id}/showAllFriends`)
+              // router.push(`../${result.id}/friendForm`)
+              router.push(`../privProfile`)
       
           } catch(error){
               setLoading(false)

@@ -1,5 +1,5 @@
 import {Text, View, TextInput, Dimensions, KeyboardAvoidingView, ActivityIndicator, ScrollView, Platform,TouchableOpacity} from 'react-native'
-import React, {useContext, useState} from 'react'
+import React, {useState} from 'react'
 import { colorsPalette } from '../../assets/colorsPalette'
 import { useRouter, Link} from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -59,13 +59,8 @@ const SignUp = () => {
               
               setLoading(false)
               setForm({username:"", email:"", pwd:""})
-              //Do not delete the routes, need it for the glob.user for all pages (Jimmy)
               authContext.setUserId(result.id);
-              router.push(`../${result.id}/qrCodeUser`)
-              router.push(`../${result.id}/cameraQrScanner`)
-              router.push(`../${result.id}/showAllFriends`)
-              router.push(`../${result.id}/friendForm`)
-              router.push(`../${result.id}/privProfile`)
+              router.push(`/user/privProfile`);
       
           } catch(error){
               setLoading(false)

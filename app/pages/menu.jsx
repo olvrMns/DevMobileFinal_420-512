@@ -12,7 +12,7 @@ const Menu = () => {
         router.push("../../game/catalog");
       }
     const handleFavPress = () => {
-    router.push("../../game/favortePicker");
+    router.push("../../game/favoritePicker");
     }
     const handleFriendsPress = () => {
         router.push("../../user/showAllFriends");

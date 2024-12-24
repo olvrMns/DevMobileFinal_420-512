@@ -36,13 +36,16 @@ const Layout = () => {
               
               }
             }>
-              <Drawer.Screen name="index" options={{headerShown:false}} />
               <Drawer.Screen name="auth" options={{headerShown:false}} />
-              <Drawer.Screen name="menu" options={{headerShown:false}} />
-              <Drawer.Screen name="[user]/friendForm"  options={{ headerShown: true }}/>
-              <Drawer.Screen name="[user]/showAllFriends"  options={{ headerShown: true }}/>
-              <Drawer.Screen name="[user]/cameraQrScanner"  options={{ headerShown: true }}/>
-              <Drawer.Screen name="[user]/qrCodeUser"  options={{ headerShown: true }}/>
+              <Drawer.Screen name="pages/menu" options={{headerShown:false}} />
+              <Drawer.Screen name="pages/settings" options={{headerShown:false}} />
+              <Drawer.Screen name="user/friendForm"  options={{ headerShown: true }}/>
+              <Drawer.Screen name="user/privProfile"  options={{ headerShown: true }}/>
+              <Drawer.Screen name="user/showAllFriends"  options={{ headerShown: true }}/>
+              <Drawer.Screen name="user/cameraQrScanner"  options={{ headerShown: true }}/>
+              <Drawer.Screen name="user/qrCodeUser"  options={{ headerShown: true }}/>
+              <Drawer.Screen name="game/catalog"  options={{ headerShown: true }}/>
+              <Drawer.Screen name="game/favoritePicker"  options={{ headerShown: true }}/>
 
           </Drawer>
         </GestureHandlerRootView>
